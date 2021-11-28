@@ -29,11 +29,15 @@ Head to the bottom of baseround.py. Find the line that says if (time.time() - ro
 
 ### *How do I make my own round?*  
 
-[1] Create a new text file in textfiles, and name it following the format: round_i.txt , with i being a number. (NOTE: number cannot be greater than the maxRounds variable in main.py. Number can also not match an already existing file )
-[2] The first row should have 1 number in it - this represents the Y co-ordinate for the first row of bricks. 
-[3] The next rows should each have 13 characters in them. These can be 0 to 9, representing a brick colour (see bottom of this readme for which are which) or "-" , which represents a brick wide gap. If a row isnt 13 characters, it can cause issues in the code - so if you want a gap, you'll have to use "-" to represent it.
-[4] Once you've completed the file, make sure to save it. Then, go to the notes section below, and check what index (yourRoundNumber-1)%4 is equal to, to see what colour you round background will be, and what enemy will spawn. 
-[5] You're done! 
+[1] Create a new text file in textfiles, and name it following the format: round_i.txt , with i being a number. (NOTE: number cannot be greater than the maxRounds variable in main.py. Number can also not match an already existing file )  
+
+[2] The first row should have 1 number in it - this represents the Y co-ordinate for the first row of bricks.  
+
+[3] The next rows should each have 13 characters in them. These can be 0 to 9, representing a brick colour (see bottom of this readme for which are which) or "-" , which represents a brick wide gap. If a row isnt 13 characters, it can cause issues in the code - so if you want a gap, you'll have to use "-" to represent it.  
+
+[4] Once you've completed the file, make sure to save it. Then, go to the notes section below, and check what index (yourRoundNumber-1)%4 is equal to, to see what colour you round background will be, and what enemy will spawn.  
+
+[5] You're done!   
 
 ### *Why the lack of comments in certain areas?*
 
@@ -45,21 +49,21 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 
 
 
-## *NOTES:*
+## **NOTES:**
 
 ### *Brick colour to numbers:*  
 
-0 - BLUE
-1 - CYAN
-2 - GOLD
-3 - GREEN
-4 - ORANGE
-5 - PINK
-6 - RED
-7 - SILVER
-8 - WHITE
-9 - YELLOW
-- - NONE
+0 - BLUE  
+1 - CYAN  
+2 - GOLD  
+3 - GREEN  
+4 - ORANGE  
+5 - PINK  
+6 - RED  
+7 - SILVER  
+8 - WHITE  
+9 - YELLOW  
+"-" - NONE
 
 ### *Round Colours:*  
 
@@ -70,15 +74,18 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 
 ### *Round Enemies:*  
 
-0 - Cone
-1 - Pyramid
-2 - Molecule
+0 - Cone  
+
+1 - Pyramid  
+
+2 - Molecule  
+
 3 - Cube 
 
 
 
 
-## *KNOWN BUGS*  
+## **KNOWN BUGS**  
 
 [1] ~~For some reason, collecting the duplicate powerup while having the catch powerup active will not cause the catcch powerup to properly stop working.~~ (29/11/21) FIXED - RAN THE CHECK FOR IF ITS CATCH BEFORE I CHANGED POWERUP.  
 
