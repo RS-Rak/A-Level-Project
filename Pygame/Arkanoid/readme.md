@@ -22,7 +22,11 @@ Change the roundNumber variable in main.py to the level number you want to test.
 
 ### *How do I test powerups?*  
 
-Go to baseround.py (which is just the round framework) and go to the randomSpawn function. Change the randint(5,10) to randint(7,7) to get a 100% spawn rate when a brick is destroyed. If you want a specific powerup, comment out the " powerup = Powerup(validPowerups[randint(0,len(validPowerups)-1)]) " line, and instead write powerup = Powerup(insert-powerup-name-here), putting the powerup name in the brackets.
+- Go to baseround.py (which is just the round framework) and go to the randomSpawn function.   
+- Change the randint(2,10) to randint(7,7) to get a 100% spawn rate when a brick is destroyed.   
+- If you want a specific powerup, comment out the " powerup = Powerup(validPowerups[randint(0,len(validPowerups)-1)]) " line   
+- Instead, write powerup = Powerup(insert-powerup-name-here), putting the powerup name in the brackets.  
+- You're done! Now your chosen powerup will spawn whenever you break a brick.  
 
 ### *How do I adjust enemy spawn rate?*
 Head to the bottom of baseround.py. Find the line that says if (time.time() - roundStartTime) >= 25:  - this controls enemy spawn rate. The 25 is how many seconds there are between enemy spawns, and by editing it you can change this. 
@@ -67,19 +71,16 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 
 ### *Round Colours:*  
 
-0 - DARKBLUE
-1 - DARKGREEN
-2 - LIGHTBLUE
-3 - LIGHTRED
+0 - DARKBLUE  
+1 - DARKGREEN  
+2 - LIGHTBLUE  
+3 - LIGHTRED  
 
 ### *Round Enemies:*  
 
 0 - Cone  
-
 1 - Pyramid  
-
 2 - Molecule  
-
 3 - Cube 
 
 
