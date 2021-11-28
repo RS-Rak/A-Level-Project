@@ -17,18 +17,35 @@ pygame.mixer.music.play(-1) #-1 means loops for ever, 0 means play just once)
 pygame.mixer.music.set_volume(0.5)
 
 #Colours
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0, 255, 0)
+AQUA = ( 0, 255, 255)
+BLACK = ( 0, 0, 0)
+BLUE  = ( 0, 0, 255)
+FUSCHIA  = (255, 0, 255)
+GRAY = (128, 128, 128)
+GREEN  = ( 0, 128, 0)
+LIME = ( 0, 255, 0)
+MAROON = (128, 0, 0)
+NAVY_BLUE = ( 0, 0, 128)
+OLIVE = (128, 128, 0)
+PURPLE = (128, 0, 128)
+RED = (255, 0, 0)
+SILVER = (192, 192, 192)
+TEAL = ( 0, 128, 128)
+WHITE = (255, 255, 255)
+YELLOW = (255, 255, 0)
 
 #Initialises the scores
 ScoreA = 0
 ScoreB = 0
 #Open a new window
 size = (700,500)
+
+
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
+
+#Creates overlay screen
+overlay = screen.convert_alpha()
 
 #Player paddle
 paddleA = Paddle(WHITE, 10, 100)
