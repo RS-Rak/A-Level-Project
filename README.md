@@ -14,3 +14,13 @@ Anything I feel is complicated enough, and anything I'm especially proud of
 
 Pygame:
 pygame. 
+    
+    Pygame sub folders:
+    
+        Conways Game Of Life - Me attempting to recreate the famous Conway's Game of Life. 
+
+        Pacman - self explanatory
+
+        Pong - It's pong.
+
+        TEST - Where I test new features I want to implement before I implement them.
