@@ -1,10 +1,10 @@
 This is my arkanoid project, run main.py to run it all. Assets holds all of the necessary assets for this to work. See bottom of page for known bugs. 
 
-##**TO DO:**
+**##TO DO:**
 • Revamp end screen - right now it just shows your score, and the highscore - not very nice. 
 • BETTER COLLISIONS - Right now, if the ball collides in a particular manner, it can just absolutely tear its way through the center of the block clump. THIS IS NOT INTENTIONAL. However, due the simplicity of the collisions, it was inevitable. 
 
-##**FAQS:**
+**##FAQS:**
 
 ###*Why did I use so many files?* 
 Made debugging easier. 
