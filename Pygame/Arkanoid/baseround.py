@@ -20,7 +20,7 @@ LIGHTRED = (210,111,111)
 optimusFont = 'Assets/Fonts/optimus.ttf'
 generationFont = 'Assets/Fonts/generation.ttf'
     
-def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives):    
+def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives, score):    
     roundStart = True
     running = True
     #Functions
@@ -114,7 +114,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
     
     #Variables 
     
-    score = 0 
+     
     edgeNo = 0
     powLoopControl = 0
     enemyloopcontrol = 0

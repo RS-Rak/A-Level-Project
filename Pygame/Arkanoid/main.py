@@ -28,9 +28,10 @@ YELLOW = (255, 255, 0)
 running =  True
 roundstart = True
 onMenu = True
-roundnumber = 2
+roundnumber = 1
 maxrounds = 4
 lives = 2
+score = 0
 #Font paths
 optimusFont = 'Assets/Fonts/optimus.ttf'
 generationFont = 'Assets/Fonts/generation.ttf'
@@ -43,7 +44,10 @@ def write(text, color, size, fontPath):
         text = font.render(text, 1, pygame.Color(color))
         return text
     
-
+"""
+ KEY:
+ IF THE BALL IS STATIONARY, HIT SPACE TO MOVE IT.    
+"""
     
         
 while running:
@@ -53,7 +57,7 @@ while running:
         onMenu = False
     
     #Keeps running the rounds untill you fail. 
-    gameOver, score, highscore, lives = round(screen, mainClock, roundnumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives)
+    gameOver, score, highscore, lives = round(screen, mainClock, roundnumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives, score)
     if gameOver == True:
         score += 1000 * roundnumber
         if score > int(highscore):
