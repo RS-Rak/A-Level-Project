@@ -1,4 +1,4 @@
-This is my arkanoid project, run main.py to run it all. Assets holds all of the necessary assets for this to work. See bottom of page for known bugs. 
+This is my arkanoid project, run main.py to run it all. Assets holds all of the necessary assets for this to work. See bottom of page for known bugs. If at any point the ball is stationary, press space to send it moving.  
 
 ## TO DO:  
 
