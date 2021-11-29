@@ -1,4 +1,7 @@
-This is my arkanoid project, run main.py to run it all. Assets holds all of the necessary assets for this to work. See bottom of page for known bugs. 
+# Arkanoid  
+
+
+This is my arkanoid project, run main.py to run it all. Assets holds all of the necessary assets for this to work. See bottom of page for known bugs. If at any point the ball is stationary, press space to send it moving.  
 
 ## TO DO:  
 
@@ -6,13 +9,13 @@ This is my arkanoid project, run main.py to run it all. Assets holds all of the 
 
 • BETTER COLLISIONS - Right now, if the ball collides in a particular manner, it can just absolutely tear its way through the center of the block clump. THIS IS NOT INTENTIONAL. However, due the simplicity of the collisions, it was inevitable. As of 29/11/21 this has been mildly fixed, but the ball can still have some strange collisions with the bricks.
 
-• Tweak ball respawning - it can be a little fast at the moment for the user. Maybe make it remain on the paddle untill the user hits space?
+• ~~Tweak ball respawning - it can be a little fast at the moment for the user. Maybe make it remain on the paddle untill the user hits space?~~ Completed (29/11/2021)
 
 ## **FAQS:**
 
 ### *Why did I use so many files?*  
 
-Made debugging easier. 
+Made debugging easier + I liked the organisation.
 
 ### *Why is the code messy in some areas?*  
 
@@ -27,7 +30,7 @@ Change the roundNumber variable in main.py to the level number you want to test.
 - Go to baseround.py (which is just the round framework) and go to the randomSpawn function.   
 - Change the randint(2,10) to randint(7,7) to get a 100% spawn rate when a brick is destroyed.   
 - If you want a specific powerup, comment out the " powerup = Powerup(validPowerups[randint(0,len(validPowerups)-1)]) " line   
-- Instead, write powerup = Powerup(insert-powerup-name-here), putting the powerup name in the brackets.  
+- Instead, write powerup = Powerup(insert-powerup-name-here), putting the powerup name in the brackets. See notes section below for valid powerup names. 
 - You're done! Now your chosen powerup will spawn whenever you break a brick.  
 
 ### *How do I adjust enemy spawn rate?*
@@ -67,19 +70,27 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 9 - YELLOW  
 "-" - NONE
 
-### *Round Colours:*  
-
+### *Round Colours:*    
+*Note: the round's background colour will be the colour at index (roundnumber - 1)%4.*  
 0 - DARKBLUE  
 1 - DARKGREEN  
 2 - LIGHTBLUE  
 3 - LIGHTRED  
 
-### *Round Enemies:*  
-
+### *Round Enemies:*    
+*Note: the round enemy will be the enemy at index (roundnumber - 1)%4.*  
 0 - Cone  
 1 - Pyramid  
 2 - Molecule  
-3 - Cube 
+3 - Cube  
+
+### *Powerup Names:*  
+1 - Catch  
+2 - Laser  
+3 - Duplicate  
+4 - Extra life  
+5 - Expand  
+6 - SLOW
 
 
 

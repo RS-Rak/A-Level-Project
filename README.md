@@ -24,3 +24,5 @@ pygame.
         Pong - It's pong.
 
         TEST - Where I test new features I want to implement before I implement them.
+        
+        Arkanoid - My fully fleshed out Arkanoid game, I'm very proud of it. 
