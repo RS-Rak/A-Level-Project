@@ -67,15 +67,15 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 9 - YELLOW  
 "-" - NONE
 
-### *Round Colours:*  
-
+### *Round Colours:*    
+*Note: the round's background colour will be the colour at index (roundnumber - 1)%4.*
 0 - DARKBLUE  
 1 - DARKGREEN  
 2 - LIGHTBLUE  
 3 - LIGHTRED  
 
-### *Round Enemies:*  
-
+### *Round Enemies:*    
+*Note: the round enemy will be the enemy at index (roundnumber - 1)%4.*  
 0 - Cone  
 1 - Pyramid  
 2 - Molecule  
