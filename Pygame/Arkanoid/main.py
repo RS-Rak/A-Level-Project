@@ -28,8 +28,9 @@ YELLOW = (255, 255, 0)
 running =  True
 roundstart = True
 onMenu = True
-roundnumber = 4
+roundnumber = 2
 maxrounds = 4
+lives = 2
 #Font paths
 optimusFont = 'Assets/Fonts/optimus.ttf'
 generationFont = 'Assets/Fonts/generation.ttf'
@@ -52,7 +53,7 @@ while running:
         onMenu = False
     
     #Keeps running the rounds untill you fail. 
-    gameOver, score, highscore = round(screen, mainClock, roundnumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy)
+    gameOver, score, highscore, lives = round(screen, mainClock, roundnumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives)
     if gameOver == True:
         score += 1000 * roundnumber
         if score > int(highscore):

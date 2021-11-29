@@ -20,7 +20,7 @@ LIGHTRED = (210,111,111)
 optimusFont = 'Assets/Fonts/optimus.ttf'
 generationFont = 'Assets/Fonts/generation.ttf'
     
-def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy):    
+def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bullet, Enemy, lives):    
     roundStart = True
     running = True
     #Functions
@@ -113,19 +113,19 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
         return loopControl, index, True
     
     #Variables 
-    lives = 2
+    
     score = 0 
     edgeNo = 0
     powLoopControl = 0
     enemyloopcontrol = 0
     powerupActive = False
     laserCollision = False
-    #these next ones are just holders = technically the variables dont exist when i call them so i need a filler.
-    savedVel = 6
+    #these next ones are just holders = technically the variables dont exist when i call them so i need a filler. Yes, there are a lot of variables but they're mostly just to check if something is active.
+    savedVel = 4
     caughtRN = False
     diff = 0
     isCatch = False
-    isLaser = False
+    isSpawning = False
     bullets = []
     ball_list = []
     bulletCD = False
@@ -211,13 +211,17 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                                 all_sprites_list.add(bullet)
                                 bulletShot = time.time()
                                 bulletCD = True
+                    if isSpawning == True:
+                        mainball.velocity[0] = 0
+                        mainball.velocity[1] = -5
+                        isSpawning = False
         
         #Paddle movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            playerpaddle.moveLeft(5)
+            playerpaddle.moveLeft(6)
         if keys[pygame.K_RIGHT]:
-            playerpaddle.moveRight(5)
+            playerpaddle.moveRight(6)
         
         #Drawing code rq
         #draws the main round screen - only the boundaries, logo and screen.
@@ -322,7 +326,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                     randomSpawn(all_sprites_list, powerupList, brick) 
                 if len(all_bricks)==0:
                     reset()
-                    return False, score, highscore
+                    return False, score, highscore, lives
             
 
         #This is for the good old laser brick collisions
@@ -371,7 +375,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
         #quick check to see if the game is finished. 
         if len(all_bricks) == 0:
             reset()
-            return False, score, highscore
+            return False, score, highscore, lives
             
             
         #Check if the ball is bouncing against any of the 4 walls:
@@ -406,14 +410,15 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
             if lives == 0:
                 playerpaddle.animate('death', all_sprites_list, clock, screen, roundColors[(roundNumber-1)%4], topEdge[edgeNo], leftEdge, rightEdge, lives, printLives)
                 reset()
-                return True, score, highscore
+                return True, score, highscore, lives
             mainball = Ball()
             all_sprites_list.add(mainball)
             ball_list.append(mainball)
             mainball.rect.x = 300
             mainball.rect.y = 750
-            mainball.velocity[0] = 4
-            mainball.velocity[1] = -6
+            mainball.velocity[0] = 0
+            mainball.velocity[1] = 0
+            isSpawning = True
         
         #Checks if you have a powerup active.
         if powerupActive:
