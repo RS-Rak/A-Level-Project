@@ -68,7 +68,7 @@ So, I wanted most of my animations to run at a different FPS to the main game, a
 "-" - NONE
 
 ### *Round Colours:*    
-*Note: the round's background colour will be the colour at index (roundnumber - 1)%4.*
+*Note: the round's background colour will be the colour at index (roundnumber - 1)%4.*  
 0 - DARKBLUE  
 1 - DARKGREEN  
 2 - LIGHTBLUE  
