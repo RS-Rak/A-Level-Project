@@ -4,9 +4,8 @@ This is my arkanoid project, run main.py to run it all. Assets holds all of the 
 
 • Revamp end screen - right now it just shows your score, and the highscore - not very nice.  
 
-• BETTER COLLISIONS - Right now, if the ball collides in a particular manner, it can just absolutely tear its way through the center of the block clump. THIS IS NOT INTENTIONAL. However, due the simplicity of the collisions, it was inevitable. As of 29/11/21 this has been mildly fixed, but the ball can still have some strange collisions with the bricks.
-
-- Tweak ball respawning - it can be a little fast at the moment for the user. Maybe make it remain on the paddle untill the user hits space?
+• BETTER COLLISIONS - Right now, if the ball collides in a particular manner, it can just absolutely tear its way through the center of the block clump. THIS IS NOT INTENTIONAL. However, due the simplicity of the collisions, it was inevitable. As of 29/11/21 this has been mildly fixed, but the ball can still have some strange collisions with the bricks.  
+• Tweak ball respawning - it can be a little fast at the moment for the user. Maybe make it remain on the paddle untill the user hits space?
 
 ## **FAQS:**
 
