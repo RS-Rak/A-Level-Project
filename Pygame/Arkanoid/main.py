@@ -28,7 +28,7 @@ YELLOW = (255, 255, 0)
 running =  True
 roundstart = True
 onMenu = True
-roundnumber = 1
+roundnumber = 4
 maxrounds = 4
 #Font paths
 optimusFont = 'Assets/Fonts/optimus.ttf'

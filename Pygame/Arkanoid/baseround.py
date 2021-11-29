@@ -263,7 +263,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                     elif mainball.rect.y > brick.rect.y + (brick.rect.h)/2 and mainball.rect.y < brick.rect.y + brick.rect.h:
                         mainball.rect.y = brick.rect.y + brick.rect.h 
                     #See ball.py
-                    mainball.bounce()    
+                    mainball.bounce(brick)    
         
         #handles picking up powerups by checking if any collide with the paddle. If they do, it runs the collectpowerup function.
         if len(powerupList) > 0:
@@ -278,6 +278,9 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                     #If its catch, changes this variable. Do i need it? Probably not, but it would take more work to remove.
                     if playerpaddle.powerup == 'catch':
                         isCatch = True
+                        while len(ball_list) > 1:
+                            ball_list[1].kill()
+                            ball_list.pop(1)  
                     else:
                         isCatch = False
                     
@@ -313,7 +316,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                     #This is to avoid a glitch I had, where when 2 blocks are hit simultaneously, the 2 velocity flips cancel each other, and the ball simply doesnt bounce. So it only allows 1 brick to be registed as being collided into as one. 
                     brick_collision_list.pop(1)
                 #bounce bounce
-                mainball.bounce()
+                mainball.bounce(brick)
                 score = brick.brickHit(score)
                 if brick.hits == 0:
                     randomSpawn(all_sprites_list, powerupList, brick) 

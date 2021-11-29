@@ -55,11 +55,14 @@ class Ball(pygame.sprite.Sprite):
             self.velocity[0] = diff/baseDiff * self.baseVel * 1.2
         self.velocity[1] = -self.velocity[1]
      
-    def bounce(self):
+    def bounce(self, brick):
         #This is just a nice general bounce for bricks - it flips y velocity when it hits a brick. I wish I could make it more complex, but I just didn't have the time. 
+        if self.rect.y + ((self.rect.h)/2) < brick.rect.y or self.rect.y > brick.rect.y + ((brick.rect.h)/2):
             self.velocity[0] = self.velocity[0]
             self.velocity[1] = -self.velocity[1]
-            
+        else:
+            self.velocity[0] = -self.velocity[0]
+            self.velocity[1] = self.velocity[1] 
     def slow(self, multiplier): 
         #When this function is called, the ball is slowed by a specified amount. 
         self.velocity[0] = self.velocity[0] * multiplier
