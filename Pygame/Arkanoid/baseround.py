@@ -197,7 +197,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                 if event.key == pygame.K_SPACE:
                     if powerupActive == True:
                         #If you press space, AND the catch powerup is active AND the ball is caught, the ball is sent off at the angle and speed it would've been sent off at if catch wasn't active. 
-                        if playerpaddle.powerup == 'catch' and caughtRN == True:
+                        if caughtRN == True:
                             mainball.velocity[0] = savedVel
                             mainball.velocity[1] = -6
                             caughtRN = False
@@ -277,7 +277,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                     lives += 1
                     powerup.kill()
                 else:
-                    
+                    powerup.kill()
                     startTime = playerpaddle.collectPowerup(powerup.powerup, all_sprites_list, clock, screen, mainball, roundColors[(roundNumber - 1)%4], topEdge[edgeNo], leftEdge, rightEdge, lives, printLives)
                     #If its catch, changes this variable. Do i need it? Probably not, but it would take more work to remove.
                     if playerpaddle.powerup == 'catch':
@@ -303,7 +303,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
                             all_sprites_list.add(mainball)
                             
                     #Once the powerup has been collected, it must be killed, and poewrupActive must be true.   
-                    powerup.kill()
+                    #powerup.kill()
                     powerupActive = True
             #hell, might as well throw some other code in here too.  This animates the powerup as it falls, assuming any are on screen. 
             for powerup in powerupList:
