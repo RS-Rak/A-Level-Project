@@ -28,8 +28,8 @@ YELLOW = (255, 255, 0)
 running =  True
 roundstart = True
 onMenu = True
-roundnumber = 1
-maxrounds = 4
+roundnumber = 3
+maxrounds = 5
 lives = 2
 score = 0
 #Font paths

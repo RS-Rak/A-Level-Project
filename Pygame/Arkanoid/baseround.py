@@ -80,7 +80,7 @@ def round(screen, clock, roundNumber, write, Brick, Paddle, Ball, Powerup, Bulle
     #I mess with this function when i when want to test a particular powerup, usually change the odds or spawn rate. 
     def randomSpawn(spriteList, PowerupList, brick):
         #the % chance of a powerup spawn.
-         if (randint(2,10)) == 7:
+         if (randint(2,10)) == 10:
              powerup = Powerup(validPowerups[randint(0,len(validPowerups)-1)])  
              #powerup = Powerup("laser")
              #However, only 10% for a life powerup or if you have max lives (5)
