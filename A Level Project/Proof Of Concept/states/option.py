@@ -2,7 +2,7 @@ import json
 import pygame as pg
 from states.state import State
 from states.UI.button import *
-from util import *
+from Utility.util import *
 class Option(State):
     
     def __init__(self, game, menu_img):

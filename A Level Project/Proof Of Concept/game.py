@@ -10,7 +10,7 @@ from states.menu import *
 class Game():
     def __init__(self):
         pg.init()
-        self.GAME_W, self.GAME_H = 400, 225
+        self.GAME_W, self.GAME_H = 400, 224
         self.SCREEN_W, self.SCREEN_H = 1920, 1080
         self.RATIO_X = self.SCREEN_W/self.GAME_W
         self.RATIO_Y = self.SCREEN_H/self.GAME_H
@@ -29,15 +29,19 @@ class Game():
             "attack": False,
             "alt-attack":False,
             "start": False,  
-            "return":False          
+            "return":False,
+            "inventory": False         
         }
         self.dt, self.prev_time = 0 , 0 #This is for framerate indepence annd delta time.
         self.state_stack =[] #this is a list, but i'm gonna treat it like a stack. 
+        #self.clock = pg.time.Clock()
+        self.FPS = 60
         self.load_assets()
         self.load_states()
     
     def game_loop(self):
         while self.playing:
+            #self.dt = self.clock.tick(self.FPS) / 1000
             self.get_dt()
             self.get_events()
             self.update()
@@ -65,6 +69,8 @@ class Game():
                     self.actions['interact'] = True
                 if event.key == pg.K_RETURN:
                     self.actions['start'] = True
+                if event.key == pg.K_TAB:
+                    self.actions['inventory'] = True
                     
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -87,6 +93,8 @@ class Game():
                     self.actions['interact'] = False
                 if event.key == pg.K_RETURN:
                     self.actions['start'] = False
+                if event.key == pg.K_TAB:
+                    self.actions["inventory"] = False
                     
             if event.type == pg.MOUSEBUTTONUP:
                 if event.button == 1:
@@ -133,6 +141,7 @@ class Game():
         self.font_dir = os.path.join(self.assets_dir, "font")     
         self.button_dir = os.path.join(self.assets_dir, "buttons")
         self.font = pygame.font.Font(os.path.join(self.font_dir, "m6x11.ttf") , 60) 
+        self.small_font = pygame.font.Font(os.path.join(self.font_dir, "m6x11.ttf") , 30) 
         self.alt_font = pygame.font.Font(os.path.join(self.font_dir, "pixelfont.ttf") , 144) 
         self.icon_dir = os.path.join(self.assets_dir, "icons")
         self.background_dir = os.path.join(self.assets_dir, "background")

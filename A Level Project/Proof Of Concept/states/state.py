@@ -15,6 +15,41 @@ class State():
     
     def render_text(self):
         pass
+    
+    def word_wrap(self,text, font, colour, x, y, allowed_width):
+        words = text.split() #splits into words
+        lines = []
+        
+        while len(words) > 0: #this is to get as many words as will fit within allowed_width
+            line_words = []
+            while len(words) > 0:
+                line_words.append(words.pop(0))
+                font_width, font_height = font.size(' '.join(line_words + words[:1])) #checks to see if the next iteration will be too wide, if so it breaks.
+                if font_width > allowed_width:
+                    break
+            
+            #add a line consisting of those words. 
+            line = ' '.join(line_words)
+            lines.append(line)
+            
+        #now that we've split the text into lines we need to render them. 
+        surface = pg.Surface((allowed_width, font_height * len(lines) + 10)) #gotta create the surface first
+        #we'll render each line below the last, so we need to keep track of 
+        # the cumulative height of the lines
+        y_offset = 0
+        for line in lines:
+            font_width, font_height = font.size(line)
+            
+            # (tx, ty) is the top-left of the font surface
+            tx = x 
+            ty = y + y_offset
+            
+            font_surface = font.render(line, True, colour)
+            surface.blit(font_surface, (tx,ty))
+            
+            y_offset += font_height
+        return surface
+        
 
     def enter_state(self):
         if len(self.game.state_stack) > 1: #if there's more than one item in the stack, that means we need to keep track of prev. state

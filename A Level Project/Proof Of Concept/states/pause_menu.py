@@ -12,10 +12,10 @@ class Pause_Menu(State):
         self.rect = self.image.get_rect()
         self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2)
         self.button_list = []
-        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 - 60,"resume-button.png", "resume-button-hover.png", self.game , "pause-menu"))
+        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 - 30,"resume-button.png", "resume-button-hover.png", self.game , "pause-menu"))
         self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2, "option-button.png", "option-button-hover.png", self.game , "pause-menu"))
-        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 + 60, "quit-button.png", "quit-button-hover.png", self.game , "pause-menu"))
-         
+        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 + 30, "quit-button.png", "quit-button-hover.png", self.game , "pause-menu"))
+    
     
     
     def update(self, delta_time, actions):
@@ -29,6 +29,7 @@ class Pause_Menu(State):
                     self.exit_state()
                 elif i == 1:
                     new_state = Option(self.game, self.img)
+                    self.exit_state()
                     new_state.enter_state()
                 else:
                     while len(self.game.state_stack) > 1:
@@ -37,9 +38,9 @@ class Pause_Menu(State):
         self.game.reset_keys()
     
     def render(self, display):
-        display.fill((255,255,255,120))
+        
         display.blit(self.image, (self.rect.x, self.rect.y))
         for i in range(len(self.button_list)):
             display.blit(self.button_list[i].image,(self.button_list[i].rect.x, self.button_list[i].rect.y))
-    
+        
         

@@ -13,45 +13,55 @@ def default_data():
             
         },
         "inventory": {
-            "EquippedWeapon": "0001",
-            "EquippedArmor":"0002",
+            "EquippedWeapon": "000",
+            "EquippedArmor":"000",
             "Hitpoints": 10,
             "Mana": 10,
-            "Ability1": "0000",
-            "Ability2": "0000",
-            "Ability3": "0000",
-            "Ability4": "0000",
-            "Ultimate": "0000",
-            1: "0000",
-            2: "0000",
-            3: "0000",
-            4: "0000",
-            5: "0000",
-            6: "0000",
-            7: "0000",
-            8: "0000",
-            9: "0000",
-            10:"0000",
-            11:"0000",
-            12:"0000",
-            13:"0000",
-            14:"0000",
-            15:"0000",
-            16:"0000",
-            17:"0000",
-            18:"0000",
-            19:"0000",
-            20:"0000",
-            21:"0000",
-            22:"0000",
-            23:"0000",
-            24:"0000",
-            25:"0000",
-            26:"0000",
-            27:"0000",
-            28:"0000",
-            29:"0000",
-            30:"0000",   }  
+            "Ability1": "000",
+            "Ability2": "000",
+            "Ability3": "000",
+            "Ability4": "000",
+            "Ultimate": "000",
+            1: "000",
+            2: "000",
+            3: "000",
+            4: "000",
+            5: "000",
+            6: "000",
+            7: "000",
+            8: "000",
+            9: "000",
+            10:"000",
+            11:"000",
+            12:"000",
+            13:"000",
+            14:"000",
+            15:"000",
+            16:"000",
+            17:"000",
+            18:"000",
+            19:"000",
+            20:"000",
+            21:"000",
+            22:"000",
+            23:"000",
+            24:"000",
+            25:"000",
+            26:"000",
+            27:"000",
+            28:"000",
+            29:"000",
+            30:"000",
+            31:"000",
+            32:"000",
+            33:"000",
+            34:"000",
+            35:"000",
+            36:"000",
+            37:"000",
+            38:"000",
+            39:"000", 
+            40:"000",}  
     }
     return data
 
@@ -81,8 +91,7 @@ def load_data(index):
 
 def convert_time(time):
     #converts time into a hh:mm:ss format. time should be given in milliseconds.  
-    time = time/1000
-    time = time//1 #this converts it into seconds. 
+    time = time//1 #this converts it into whole seconds. 
     minutes = time//60
     seconds = int(time - (minutes * 60))
     hours = int(minutes//60)
@@ -96,8 +105,7 @@ def convert_time(time):
     return "{} : {} : {}".format(str(hours), str(minutes), str(seconds))
 
 
-    
 #options to be added. 
 #for i in range(3):
- #   clear_save(i, default_data())
+ #  clear_save(i, default_data())
 #this is for resetting my json files. 

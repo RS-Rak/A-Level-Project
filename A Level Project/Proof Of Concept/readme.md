@@ -8,3 +8,4 @@ add options/credits menu
 work on saving/pausing 
 cursor's broken, gonna need to implement a custom one uggghhhh
 ok i also need to fix the save selection - right now you can't delete it i'll work on that 
+ok now i need to finish tooltips and to also create mvoement for the player
