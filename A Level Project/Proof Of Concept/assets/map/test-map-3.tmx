@@ -55,7 +55,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="Exits">
-  <object id="3" name="test-map" x="160" y="0" width="32" height="3"/>
+ <objectgroup id="3" name="Exits" offsetx="0.405834" offsety="-0.405834">
+  <object id="3" name="test-map" x="160.304" y="0" width="32" height="3.01332"/>
  </objectgroup>
 </map>

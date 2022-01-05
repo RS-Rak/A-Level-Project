@@ -19,6 +19,7 @@ class Game():
         self.running, self.playing = True, True
         
         self.save_data = None #on launch, save slot is none
+        self.save_slot = None
         #Player controlled actions. I'll insert more/change when necessary. 
         self.actions ={
             "left": False,
@@ -34,8 +35,8 @@ class Game():
         }
         self.dt, self.prev_time = 0 , 0 #This is for framerate indepence annd delta time.
         self.state_stack =[] #this is a list, but i'm gonna treat it like a stack. 
-        #self.clock = pg.time.Clock()
-        self.FPS = 60
+        self.clock = pg.time.Clock()
+        self.FPS = 100
         self.load_assets()
         self.load_states()
     
@@ -109,6 +110,7 @@ class Game():
         if len(self.state_stack) > 0:
             self.state_stack[-1].render_text()
         pygame.display.flip()
+        
     def render(self):
         #scales up the game canvas to the size of the actual screen
         if len(self.state_stack) > 0:

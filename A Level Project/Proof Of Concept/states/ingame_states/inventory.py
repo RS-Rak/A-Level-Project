@@ -12,10 +12,11 @@ class Inventory(State):
         State.__init__(self, game)
         self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "inventory.png")).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2)
+        self.rect.midtop = (self.game.GAME_W/2, 0)
         self.inventory = self.game.save_data["inventory"]
         self.slot_list =[]
         self.x_offset, self.y_offset = 0,0
+        self.currently_held = None
         for i in range(40):
             slot = Button(96 + (self.x_offset * 28) + self.rect.x , 18 + (self.y_offset * 28) + self.rect.y, None, None, self.game, None)
             self.slot_list.append(slot)
@@ -32,7 +33,8 @@ class Inventory(State):
             self.exit_state()
         for i in range(len(self.slot_list)):
             self.slot_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
-        
+            if self.slot_list[i].clicked == True:
+                pass
         self.game.reset_keys()
     
     def render(self, display):

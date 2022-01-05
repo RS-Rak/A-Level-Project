@@ -15,7 +15,8 @@ class Save_Selection(State):
         for i in range(3):
             self.button_list.append(Button(self.game.GAME_W/2 - 25, 85 + i* 50, "play-save-button.png", "play-save-button-hover.png", self.game, "save-menu"))
             self.button_list.append(Button(self.game.GAME_W/2 + 38, 85 + i* 50, "delete-save-button.png", "delete-save-button-hover.png", self.game, "save-menu"))
-    
+        self.save_dir = os.path.join("assets","saved_data","save_slots")
+        
     def reset_save_slot(self, index):
         clear_save(index, default_data())
         pass   
@@ -33,7 +34,8 @@ class Save_Selection(State):
                     self.button_list[x].checkCol(pg.mouse.get_pos(), actions, self.game)
                     if self.button_list[x].clicked == True:
                         if x%2 == 0:
-                            self.game.save_data = load_data(i)
+                            self.game.save_data = load_data(i, True)
+                            self.game.save_slot = i+1
                             new_state = Game_World(self.game, self.menu_img)
                             new_state.enter_state()
                         else:
@@ -47,8 +49,8 @@ class Save_Selection(State):
         for i in range(3):
             display.blit(self.save_slots[i].image, (self.save_slots[i].rect.x, self.save_slots[i].rect.y))
             
-            if load_data(i)["save-logo"] != None: #displays the location image with some dictionary wizadry. 
-                display.blit(load_data(i)["save-logo"], (self.save_slots[i].rect.x + 4, self.save_slots[i].rect.y + 2))
+            if load_data(i, True)["save-logo"] != None: #displays the location image with some dictionary wizadry. 
+                display.blit((load_data(i, True))["save-logo"], (self.save_slots[i].rect.x + 4, self.save_slots[i].rect.y + 2))
                 
         for i in range(6):
             display.blit(self.button_list[i].image, (self.button_list[i].rect.x, self.button_list[i].rect.y))
@@ -56,6 +58,6 @@ class Save_Selection(State):
     
     def render_text(self):
         for i in range(3):
-            self.game.draw_text(None, load_data(i)['name'], (255,255,255), (self.save_slots[i].rect.x + 80) , (self.save_slots[i].rect.y + 20), self.game.font)
-            self.game.draw_text(None, convert_time(load_data(i)['time-played']), (255,255,255), self.save_slots[i].rect.x + 160, self.save_slots[i].rect.y + 20, self.game.font)
+            self.game.draw_text(None, load_data(i, True)['name'], (255,255,255), (self.save_slots[i].rect.x + 80) , (self.save_slots[i].rect.y + 20), self.game.font)
+            self.game.draw_text(None, convert_time(load_data(i, True)['time-played']), (255,255,255), self.save_slots[i].rect.x + 160, self.save_slots[i].rect.y + 20, self.game.font)
         self.game.draw_text(None, "SELECT A SAVE SLOT", (255,255,255), self.game.GAME_W/2,38, self.game.alt_font)

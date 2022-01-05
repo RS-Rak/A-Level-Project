@@ -6,6 +6,9 @@ def default_data():
         "name": "???",
         "save-logo": None,
         "current-location": "grandma's-temple",
+        "current-map": "test-map",
+        "playerx": 265,
+        "playery": 298,
         "cutscenes": {
             "opening-cutscene": False,
             "book-discovery": False,
@@ -83,11 +86,20 @@ def clear_save(index, data):
     with open((os.path.join("assets","saved_data","save_slots","save_slot_{}.json".format(str(index + 1)))),'w') as file:
         json.dump(data, file)
 
-def load_data(index):
-    with open((os.path.join("assets","saved_data","save_slots","save_slot_{}.json".format(str(index + 1)))),'r+') as file:
-        data = json.load(file)
-    set_save_logo(data)
+def load_data(path, is_save):
+    if is_save:
+        with open((os.path.join("assets","saved_data","save_slots","save_slot_{}.json".format(str(path + 1)))),'r+') as file:
+            data = json.load(file)
+        set_save_logo(data)
+    else:
+        with open(path, 'r+') as file:
+            data = json.load(file)
     return data
+
+def dump_data(data, file_path):
+    with open (file_path, 'r+') as file:
+        json.dump(data, file)
+    
 
 def convert_time(time):
     #converts time into a hh:mm:ss format. time should be given in milliseconds.  
@@ -109,3 +121,4 @@ def convert_time(time):
 #for i in range(3):
  #  clear_save(i, default_data())
 #this is for resetting my json files. 
+
