@@ -16,7 +16,7 @@ class State():
     def render_text(self):
         pass
     
-    def word_wrap(self,text, font, colour, x, y, allowed_width):
+    def word_wrap(self,text, font, colour, x, y, allowed_width): #this is my word-wrap function - it helps keep the text nice and neat.
         words = text.split() #splits into words
         lines = []
         
@@ -51,12 +51,12 @@ class State():
         return surface
         
 
-    def enter_state(self):
+    def enter_state(self): #adds a state to the stack. 
         if len(self.game.state_stack) > 1: #if there's more than one item in the stack, that means we need to keep track of prev. state
             self.prev_state = self.game.state_stack[-1]
         self.game.state_stack.append(self) #ads it to the state that's wild. 
     
-    def exit_state(self):
+    def exit_state(self): #removes a state from the stack
         self.game.state_stack.pop()
     
    

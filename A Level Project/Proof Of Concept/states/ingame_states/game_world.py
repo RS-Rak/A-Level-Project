@@ -12,7 +12,7 @@ class Game_World(State):
         State.__init__(self, game)
         
         self.menu_img = menu_img
-        self.all_sprites = pg.sprite.LayeredUpdates()
+        self.all_sprites = pg.sprite.Group()
         self.start_time = time.time()
         
         self.map_dir = os.path.join("assets", "map")
@@ -49,12 +49,18 @@ class Game_World(State):
         self.playery = self.spawn_data[str(prevmap)]["playery"]
         self.game.save_data["playerx"] = self.playerx
         self.game.save_data["playery"] = self.playery
-       
+    
+    def get_rel_player_loc(self): #gets the relative player location to the top left corner of the map. 
+        map_x  = abs(self.map.rect.x)
+        map_y = abs(self.map.rect.y)
+        player_loc = (self.player.rect.x - map_x, self.player.rect.y - map_y)
+        return player_loc
+      
     def update(self, delta_time, actions):
         if actions['return']:
             self.transparency = True
             self.render(self.game.game_canvas)
-            new_state = Pause_Menu(self.game, self.menu_img, self.start_time)
+            new_state = Pause_Menu(self.game, self.menu_img, self.start_time, self.get_rel_player_loc())
             self.game.reset_keys()
             new_state.enter_state()
             

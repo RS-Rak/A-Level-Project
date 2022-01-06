@@ -5,7 +5,7 @@ from states.UI.button import *
 from Utility.util import *
 from Utility.item_id import *
 import os 
-
+#inventory screen, visuals will be overhualed soon.
 class Inventory(State):
         
     def __init__(self, game):
@@ -18,7 +18,7 @@ class Inventory(State):
         self.x_offset, self.y_offset = 0,0
         self.currently_held = None
         for i in range(40):
-            slot = Button(96 + (self.x_offset * 28) + self.rect.x , 18 + (self.y_offset * 28) + self.rect.y, None, None, self.game, None)
+            slot = Button(96 + (self.x_offset * 28) + self.rect.x , 18 + (self.y_offset * 28) + self.rect.y, None, None, self.game, None) #creates invisible buttons over inventory slots so i can tell when they're pressed. 
             self.slot_list.append(slot)
             self.x_offset += 1
             if (i+1)%10 == 0:
@@ -56,7 +56,7 @@ class Inventory(State):
        
             
             
-    def display_tooltip(self, index,x,y):
+    def display_tooltip(self, index,x,y): #displays a tooltip of the 
         self.tooltip_list = []
         if self.inventory[index] == '000':
             pass

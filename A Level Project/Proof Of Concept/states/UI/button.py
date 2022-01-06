@@ -1,11 +1,11 @@
 import pygame as pg
 import os
 import time 
-
+#very simple, very nice button code. buttons usually consist of a 
 class Button():
     def __init__(self, x, y, image, image_hover, game, dir):
         self.game = game 
-        if image == None:
+        if image == None: #this represents inventory/chest slots. These should NOT change colours when hovered, instead they 
             self.image=pg.Surface((19,19))
             self.image.fill((42,63,91))
             self.images = [self.image, self.image]

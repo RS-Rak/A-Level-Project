@@ -35,15 +35,15 @@ class Game():
         }
         self.dt, self.prev_time = 0 , 0 #This is for framerate indepence annd delta time.
         self.state_stack =[] #this is a list, but i'm gonna treat it like a stack. 
-        self.clock = pg.time.Clock()
-        self.FPS = 100
+        self.clock = pg.time.Clock() # clockin
+        self.FPS = 200
         self.load_assets()
         self.load_states()
     
     def game_loop(self):
         while self.playing:
-            #self.dt = self.clock.tick(self.FPS) / 1000
-            self.get_dt()
+            self.dt = self.clock.tick(self.FPS) / 1000 #gets delta_time from the self.clock.tick
+            #self.get_dt() #i haven't decided whether to use the above line or self.get_dt() yet
             self.get_events()
             self.update()
             self.render()
@@ -104,9 +104,9 @@ class Game():
                     self.actions['alt-attack'] = False
     
     def update(self):
-        self.state_stack[-1].update(self.dt, self.actions)
+        self.state_stack[-1].update(self.dt, self.actions) #updates whatevers on top of the state stack
     
-    def render_text(self):
+    def render_text(self): #renders text - text has to be rendered last else it'll blur oddly.
         if len(self.state_stack) > 0:
             self.state_stack[-1].render_text()
         pygame.display.flip()
@@ -126,8 +126,8 @@ class Game():
         self.dt = now - self.prev_time
         self.prev_time = now
     
-    def draw_text(self, surface, text, color, x,y, font):
-        #this is my function for drawing text to the screen. 
+    def draw_text(self, surface, text, color, x,y, font): 
+        #this is one of my functions for drawing text to the screen. 
         x = x * self.RATIO_X
         y = y * self.RATIO_Y
         text_surface = font.render(text, False, color)

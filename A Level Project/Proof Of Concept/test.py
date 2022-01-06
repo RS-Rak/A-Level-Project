@@ -41,6 +41,7 @@ def generateMap(textfile):
     maplist = [x.strip() for x in content]
     return maplist
 
+
 class Tile(pygame.sprite.Sprite):
     def __init__(self, x, y, imagepath):
         pygame.sprite.Sprite.__init__(self)

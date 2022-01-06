@@ -1,5 +1,6 @@
 import json, os, pygame
-from pygame.event import clear
+#this file is mostly for json data manipulation. 
+
 def default_data():
     data = {
         "time-played":0,
@@ -97,6 +98,8 @@ def load_data(path, is_save):
     return data
 
 def dump_data(data, file_path):
+    with open (file_path, 'w') as file:
+        file.close()
     with open (file_path, 'r+') as file:
         json.dump(data, file)
     

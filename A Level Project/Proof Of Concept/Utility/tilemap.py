@@ -1,16 +1,16 @@
 import pytmx
 import pygame as pg 
-
+#This file is responsible for the creation of the tilemap. 
 
 class TiledMap(pg.sprite.Sprite):
     def __init__(self, filename, game):
         pg.sprite.Sprite.__init__(self)
         self._layer = 1
         self.game = game
-        self.tiledmap = pytmx.load_pygame(filename, pixelalpha = True)
+        self.tiledmap = pytmx.load_pygame(filename, pixelalpha = True) #loads the file
         self.width = self.tiledmap.width * self.tiledmap.tilewidth
         self.height = self.tiledmap.height * self.tiledmap.tileheight
-        self.collision_layer = self.tiledmap.get_layer_by_name('collisions')
+        self.collision_layer = self.tiledmap.get_layer_by_name('collisions') #grabs the collision layers
         self.exit_layer = self.tiledmap.get_layer_by_name("Exits")
         self.collision_tiles = [] #collision tiles
         self.exits = [] #this is the exits for the map. 
@@ -26,9 +26,9 @@ class TiledMap(pg.sprite.Sprite):
             self.exits_names.append(object.name)
             self.exits.append(new_rect)
         
-    def render(self, surface):
+    def render(self, surface): #renders the whole thing
         get_ti = self.tiledmap.get_tile_image_by_gid
-        for layer in self.tiledmap.layers:
+        for layer in self.tiledmap.layers: #renders layer by layer, all in their relative position
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x,y,gid in layer:
                     tile = get_ti(gid)
@@ -39,16 +39,16 @@ class TiledMap(pg.sprite.Sprite):
                     #ithis is where i'll put all the other object layers.  
                      pass
     
-    def make_map(self):
+    def make_map(self): #renders it to a temp surface so i only need to manipulate the layer. Convenient right? 
         temp_surface = pg.Surface((self.width, self.height))
         self.render(temp_surface)
         self.image = temp_surface
         return temp_surface
     
-    def update(self):
+    def update(self): #I had this here in case of using all.sprites.list.update - still gonna keep it just in case. 
         pass
  
-class Collision_Tile():
+class Collision_Tile(): #collisiomn tiles are their own class so i can create a bunch easily. 
     def __init__(self, x, y, tilesize):
         self.image=pg.Surface((tilesize, tilesize))
         self.image.fill((255,0,0))
@@ -60,17 +60,17 @@ class Collision_Tile():
  
 class Camera():
     def __init__(self, width, height):
-        self.camera = pg.Rect(0,0,width, height)
+        self.camera = pg.Rect(0,0,width, height) #the camera represents what's actually being displayed on the screen at any given moment. 
         self.width = width
         self.height = height
     
     def apply(self, entity):
-        return entity.rect.move(self.camera.topleft)
+        return entity.rect.move(self.camera.topleft) #This function and the one below move entities so they appear on the right space in the screen.
 
     def apply_rect(self, rect):
         return rect.move(self.camera.topleft)
     
-    def update(self, target, game):
+    def update(self, target, game):  #this little piece of code centers the camera on the player, except when you're at the edge of the map.
         x = -target.rect.centerx + int(game.GAME_W/2)
         y = -target.rect.centery + int(game.GAME_H/2)
         

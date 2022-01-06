@@ -1,5 +1,6 @@
 import pygame as pg 
 import os
+#this entire file serves purely as an item dictionary for my various items,
 item_dict = {
     "000": None,
     "001": {
