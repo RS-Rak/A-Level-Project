@@ -1,1 +1,0 @@
-This is my testing folder, man tests things here. 
