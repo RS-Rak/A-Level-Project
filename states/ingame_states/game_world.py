@@ -5,7 +5,7 @@ from states.pause_menu import *
 from Utility.tilemap import *
 from Utility.util import *
 from states.ingame_states.inventory import *
-from states.ingame_states.player import *
+from sprites.player import *
 
 class Game_World(State):
     def __init__(self, game, menu_img):

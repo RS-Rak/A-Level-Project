@@ -1,16 +1,23 @@
 import pygame as pg
 import os
+from sprites.entity import *
+from pygame import Vector2
 
-class Player(pg.sprite.Sprite):
+class Player(Entity):
     def __init__(self,x,y, game):
-        super().__init__()
-        pg.sprite.Sprite.__init__(self)
-        self._layer = 3
-        self.game = game
+        Entity.__init__(self,game)
         self.load_sprites()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.current_direction = 0   #what this and the dict below are for is for when i need to use the current direction of the entity
+        self.current_direction_dict ={
+            "front": Vector2(self.rect.h, 0),
+            "back": 0,
+            "left": 0,
+            "right":0
+            #they're all 0 for now because I haven't got around to it yet 
+        }
         
     def update(self, actions, delta_time, tiles):
         #get the direction from inputs - i'm subtracting them since true has a value of 1 while false has 0, so if both keys are being hit it doesnt. 
@@ -26,6 +33,7 @@ class Player(pg.sprite.Sprite):
             self.rect.x += round(100 * delta_time * direction_x)
             self.rect.y += round(100 * delta_time * direction_y)
             self.check_if_stuck(tiles, old_x, old_y)
+        #ok now let's add the check for interaction code. 
             
             
     def check_if_stuck(self, tiles, old_x, old_y):
@@ -33,7 +41,7 @@ class Player(pg.sprite.Sprite):
             self.rect.x = old_x
             self.rect.y = old_y
     
-    def check_exits(self, exits):
+    def check_exits(self, exits): #note, i can just combine this into the player_check_col list? 
         check = False  
         index = 0
         for i in range(len(exits)):
@@ -41,7 +49,8 @@ class Player(pg.sprite.Sprite):
                 check = True
                 index = i
         return check, index
-        
+    
+       
     def animate(self, delta_time, direction_x, direction_y):
         #checks how long since last frame
         self.last_frame_update += delta_time
@@ -51,11 +60,19 @@ class Player(pg.sprite.Sprite):
         # If an image was pressed, use the appropriate list of frames
         
         if direction_x:
-            if direction_x > 0: self.curr_animation_list = self.right_sprites
-            if direction_x < 0: self.curr_animation_list = self.left_sprites
+            if direction_x > 0: 
+                self.curr_animation_list = self.right_sprites
+                self.current_direction = "right"
+            if direction_x < 0: 
+                self.curr_animation_list = self.left_sprites
+                self.current_direction = "left"
         if direction_y:
-            if direction_y > 0: self.curr_animation_list = self.front_sprites
-            if direction_y < 0: self.curr_animation_list = self.back_sprites
+            if direction_y > 0: 
+                self.curr_animation_list = self.front_sprites
+                self.current_direction = "front"
+            if direction_y < 0: 
+                self.curr_animation_list = self.back_sprites
+                self.current_direction = "back"
         #advance the animation if enough time has passed.
         if self.last_frame_update > .15:
             self.last_frame_update = 0
