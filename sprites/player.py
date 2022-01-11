@@ -33,19 +33,19 @@ class Player(Entity):
             self.rect.x += round(100 * delta_time * direction_x)
             self.rect.y += round(100 * delta_time * direction_y)
             self.check_if_stuck(tiles, old_x, old_y)
-        #ok now let's add the check for interaction code. 
-            
-            
+    
+                  
     def check_if_stuck(self, tiles, old_x, old_y):
         if self.rect.collidelistall(tiles):
             self.rect.x = old_x
             self.rect.y = old_y
     
-    def check_exits(self, exits): #note, i can just combine this into the player_check_col list? 
+    def check_col(self, list): #note, i can just combine this into the player_check_col list? 
         check = False  
-        index = 0
-        for i in range(len(exits)):
-            if pg.Rect.colliderect(self.rect, exits[i]):
+        index = None
+        collision_rect = pg.Rect((self.rect.midleft),(self.rect.w, self.rect.h/2) )
+        for i in range(len(list)):
+            if pg.Rect.colliderect(collision_rect, list[i]):
                 check = True
                 index = i
         return check, index
@@ -104,7 +104,9 @@ class Player(Entity):
         
         
     def check_player_col(self, tiles, movement_x, movement_y):
-        new_rect = self.rect.move(movement_x, movement_y)  
+        #new_rect = self.rect.move(movement_x, movement_y) 
+        collision_rect = pg.Rect((self.rect.midleft),(self.rect.w, self.rect.h/2) ) 
+        new_rect = collision_rect.move(movement_x, movement_y) 
         check = False
         if (new_rect.collidelistall(tiles)): #this tests every tile with the player rectangle
             check = True

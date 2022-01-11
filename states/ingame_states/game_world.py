@@ -72,7 +72,7 @@ class Game_World(State):
             new_state.enter_state()
             
         self.player.update(actions, delta_time, self.collision_tiles)
-        changingMap, index = self.player.check_exits(self.exits)
+        changingMap, index = self.player.check_col(self.exits)
         
         if changingMap:
             self.get_player_location(self.exit_names[index], str(self.game.save_data["current-map"]))

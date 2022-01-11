@@ -5,23 +5,23 @@ from states.UI.button import *
 from Utility.util import *
 from Utility.item_id import *
 import os 
-#inventory screen, visuals will be overhualed soon.
+#inventory screen, visuals will be overhualed soon. additonal note, add stacking + ability to move items within it. 
 class Inventory(State):
         
     def __init__(self, game):
         State.__init__(self, game)
-        self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "inventory.png")).convert_alpha()
+        self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "finalinventory.png")).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.midtop = (self.game.GAME_W/2, 0)
+        self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2)
         self.inventory = self.game.save_data["inventory"]
         self.slot_list =[]
         self.x_offset, self.y_offset = 0,0
         self.currently_held = None
-        for i in range(40):
-            slot = Button(96 + (self.x_offset * 28) + self.rect.x , 18 + (self.y_offset * 28) + self.rect.y, None, None, self.game, None) #creates invisible buttons over inventory slots so i can tell when they're pressed. 
+        for i in range(42):
+            slot = Button(self.rect.x + 19 + self.x_offset * 23, self.rect.y + 15 + self.y_offset * 23, "inventory-slot.png", "inventory-slot-hover.png",self.game,"in-game", "topleft") #creates  buttons over inventory slots so i can tell when they're pressed. 
             self.slot_list.append(slot)
             self.x_offset += 1
-            if (i+1)%10 == 0:
+            if (i+1)%6 == 0:
                 self.y_offset += 1
                 self.x_offset = 0  
             
@@ -41,14 +41,14 @@ class Inventory(State):
         display.blit(self.image, (self.rect))
         self.y_offset = 0
         self.x_offset = 0
-        for i in range(40):
+        for i in range(42):
             display.blit(self.slot_list[i].image, (self.slot_list[i].rect))
             if self.inventory[str(i + 1)] == "000":
                 pass
             else:
-                display.blit(pg.image.load(item_dict[self.inventory[str(i+1)]]["item_image"]).convert_alpha(), (96 + (self.x_offset * 28) + self.rect.x, 18 + (self.y_offset * 28) + self.rect.y)) 
+                display.blit(pg.image.load(item_dict[self.inventory[str(i+1)]]["item_image"]).convert_alpha(), (21 + (self.x_offset * 23) + self.rect.x, 17 + (self.y_offset * 23) + self.rect.y)) 
             
-            if (i+1)%10 == 0:
+            if (i+1)%6 == 0:
                 self.y_offset += 1
                 self.x_offset = 0  
             self.x_offset += 1

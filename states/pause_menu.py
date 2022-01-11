@@ -19,9 +19,9 @@ class Pause_Menu(State):
         self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2) #centers the pause menu in the center of the screen.
         
         self.button_list = [] #these are my buttons, they're held in a list for convenience.
-        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 - 30,"resume-button.png", "resume-button-hover.png", self.game , "pause-menu"))
-        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2, "option-button.png", "option-button-hover.png", self.game , "pause-menu"))
-        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 + 30, "quit-button.png", "quit-button-hover.png", self.game , "pause-menu"))
+        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 - 30,"resume-button.png", "resume-button-hover.png", self.game , "pause-menu", "center"))
+        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2, "option-button.png", "option-button-hover.png", self.game , "pause-menu", "center"))
+        self.button_list.append(Button(self.game.GAME_W/2, self.game.GAME_H/2 + 30, "quit-button.png", "quit-button-hover.png", self.game , "pause-menu", "center"))
         self.start_time = start_time
     
     

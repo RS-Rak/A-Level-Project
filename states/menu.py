@@ -12,9 +12,9 @@ class Menu(State):
     def __init__(self, game):
         State.__init__(self,game)
         #self.button_list = [] # list of buttons
-        self.playbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.55, "PLAYBUTTON.png", "PLAYBUTTON_HOVER.png", self.game, "main-menu")
-        self.optionbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.7, "OPTIONSBUTTON.png", "OPTIONSBUTTON_HOVER.png", self.game, "main-menu")
-        self.creditbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.85, "CREDITBUTTON.png","CREDITBUTTON_HOVER.png", self.game, "main-menu")
+        self.playbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.55, "PLAYBUTTON.png", "PLAYBUTTON_HOVER.png", self.game, "main-menu", "center")
+        self.optionbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.7, "OPTIONSBUTTON.png", "OPTIONSBUTTON_HOVER.png", self.game, "main-menu", "center")
+        self.creditbutton = Button(self.game.GAME_W/2, self.game.GAME_H * 0.85, "CREDITBUTTON.png","CREDITBUTTON_HOVER.png", self.game, "main-menu", "center")
         self.button_list = [self.playbutton, self.optionbutton, self.creditbutton] 
         self.menu_img = pg.image.load(os.path.join(self.game.background_dir, "menu-background.png")).convert()
         self.logo_img = pg.image.load(os.path.join(self.game.icon_dir, "main-menu-logo.png")).convert()

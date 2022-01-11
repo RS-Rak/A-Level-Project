@@ -11,10 +11,10 @@ class Save_Selection(State):
         self.save_slots = []
         self.button_list = []
         for i in range(3):
-            self.save_slots.append(Button(self.game.GAME_W/2, 75 + i*50, "default-save-slot.png", "default-save-slot-hover.png", self.game , "save-menu"))
+            self.save_slots.append(Button(self.game.GAME_W/2, 75 + i*50, "default-save-slot.png", "default-save-slot-hover.png", self.game , "save-menu", "center"))
         for i in range(3):
-            self.button_list.append(Button(self.game.GAME_W/2 - 25, 85 + i* 50, "play-save-button.png", "play-save-button-hover.png", self.game, "save-menu"))
-            self.button_list.append(Button(self.game.GAME_W/2 + 38, 85 + i* 50, "delete-save-button.png", "delete-save-button-hover.png", self.game, "save-menu"))
+            self.button_list.append(Button(self.game.GAME_W/2 - 25, 85 + i* 50, "play-save-button.png", "play-save-button-hover.png", self.game, "save-menu", "center"))
+            self.button_list.append(Button(self.game.GAME_W/2 + 38, 85 + i* 50, "delete-save-button.png", "delete-save-button-hover.png", self.game, "save-menu", "center"))
         self.save_dir = os.path.join("assets","saved_data","save_slots")
         
     def reset_save_slot(self, index):

@@ -26,7 +26,7 @@ def default_data():
             "Ability3": "000",
             "Ability4": "000",
             "Ultimate": "000",
-            1: "000",
+            1: "001", #note, reset this later
             2: "000",
             3: "000",
             4: "000",
@@ -65,7 +65,9 @@ def default_data():
             37:"000",
             38:"000",
             39:"000", 
-            40:"000",}  
+            40:"000",
+            41:"000",
+            42:"000"}  
     }
     return data
 

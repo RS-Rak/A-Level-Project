@@ -3,21 +3,17 @@ import os
 import time 
 #very simple, very nice button code. buttons usually consist of a 
 class Button():
-    def __init__(self, x, y, image, image_hover, game, dir):
+    def __init__(self, x, y, image, image_hover, game, dir, align):
         self.game = game 
-        if image == None: #this represents inventory/chest slots. These should NOT change colours when hovered, instead they 
-            self.image=pg.Surface((19,19))
-            self.image.fill((42,63,91))
-            self.images = [self.image, self.image]
-            self.rect = self.image.get_rect()
-            self.rect.topleft = (x,y)
-        else: 
-            self.image_unclicked = pg.image.load(os.path.join(game.button_dir, dir, image)).convert_alpha()
-            self.image_hover = pg.image.load(os.path.join(game.button_dir, dir, image_hover ))
-            self.images = [self.image_unclicked, self.image_hover]
-            self.image = self.images[0] 
-            self.rect = self.image.get_rect()
+        self.image_unclicked = pg.image.load(os.path.join(game.button_dir, dir, image)).convert_alpha()
+        self.image_hover = pg.image.load(os.path.join(game.button_dir, dir, image_hover ))
+        self.images = [self.image_unclicked, self.image_hover]
+        self.image = self.images[0] 
+        self.rect = self.image.get_rect()
+        if align == 'center':
             self.rect.center = (x,y)
+        elif align == 'topleft':
+            self.rect.topleft = (x,y)
         self.clicked, self.hover = False, False
         self.hover_time = 0
     
