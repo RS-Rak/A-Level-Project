@@ -10,22 +10,39 @@ class Inventory(State):
         
     def __init__(self, game):
         State.__init__(self, game)
-        self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "finalinventory.png")).convert_alpha()
+        self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "finalinventoryalt.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2)
         self.inventory = self.game.save_data["inventory"]
-        self.slot_list =[]
+        self.current_inv = self.inventory[self.inventory["Current-Inv"]]
+        
+        self.slot_list = []
+        itemtab = Tab(self.rect.x, self.rect.y + 27, "item-tab.png", "item-tab-hover.png", self.game, "in-game", "topleft", "item-tab-clicked.png", "item-inv")
+        equipmentab = Tab(self.rect.x, 74 + self.rect.y, "equipment-tab.png", "equipment-tab-hover.png", self.game, "in-game", "topleft", "equipment-tab-clicked.png","equipment-inv")
+        spellstab = Tab(self.rect.x, 121 + self.rect.y, "spells-tab.png", "spells-tab-hover.png", self.game, "in-game", "topleft", "spells-tab-clicked.png", "spells-inv")
+        self.tab_list = [itemtab, equipmentab, spellstab]
+        if self.inventory["Current-Inv"] == "item-tab":
+            itemtab.selected = True
+            itemtab.image = itemtab.images[2]
+        elif self.inventory["Current-Inv"] == "equipment-tab":
+            equipmentab.selected = True
+            equipmentab.image = equipmentab.images[2]
+        elif self.inventory["Current-Inv"] == "spells-tab":
+            spellstab.selected = True
+            spellstab.image = spellstab.images[2]
+        
+        
         self.x_offset, self.y_offset = 0,0
         self.currently_held = None
-        for i in range(42):
-            slot = Button(self.rect.x + 19 + self.x_offset * 23, self.rect.y + 15 + self.y_offset * 23, "inventory-slot.png", "inventory-slot-hover.png",self.game,"in-game", "topleft") #creates  buttons over inventory slots so i can tell when they're pressed. 
+        for i in range(48):
+            slot = Button(self.rect.x + 21 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23, "inventory-slot.png", "inventory-slot-hover.png",self.game,"in-game", "topleft") #creates  buttons over inventory slots so i can tell when they're pressed. 
             self.slot_list.append(slot)
             self.x_offset += 1
             if (i+1)%6 == 0:
                 self.y_offset += 1
-                self.x_offset = 0  
-            
-        #print(self.inventory)
+                self.x_offset = 0
+        
+
     
     def update(self, delta_time, actions):
         if actions['return'] or actions["inventory"]:
@@ -35,37 +52,50 @@ class Inventory(State):
             self.slot_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
             if self.slot_list[i].clicked == True:
                 pass
+        for i in range(len(self.tab_list)):
+            if self.tab_list[i].selected != True:
+                self.tab_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
+                if self.tab_list[i].selected == True:
+                    for x in range(len(self.tab_list)):
+                        self.tab_list[x].selected = False
+                    self.tab_list[i].selected = True 
+                    self.current_inv = self.inventory[self.tab_list[i].name] 
+                    self.inventory["Current-Inv"] = self.tab_list[i].name
+                    
         self.game.reset_keys()
     
     def render(self, display):
         display.blit(self.image, (self.rect))
         self.y_offset = 0
         self.x_offset = 0
-        for i in range(42):
+        for i in range(48):
             display.blit(self.slot_list[i].image, (self.slot_list[i].rect))
-            if self.inventory[str(i + 1)] == "000":
+        for i in range(3):
+            display.blit(self.tab_list[i].image, (self.tab_list[i].rect))
+        for i in range(48):
+            if self.current_inv[str(i + 1)] == "000":
                 pass
             else:
-                display.blit(pg.image.load(item_dict[self.inventory[str(i+1)]]["item_image"]).convert_alpha(), (21 + (self.x_offset * 23) + self.rect.x, 17 + (self.y_offset * 23) + self.rect.y)) 
+                display.blit(pg.image.load(item_dict[self.current_inv[str(i+1)]]["item_image"]).convert_alpha(), (23 + (self.x_offset * 23) + self.rect.x, 14 + (self.y_offset * 23) + self.rect.y)) 
             
             if (i+1)%6 == 0:
                 self.y_offset += 1
                 self.x_offset = 0  
             self.x_offset += 1
-            
+        
        
             
             
     def display_tooltip(self, index,x,y): #displays a tooltip of the 
         self.tooltip_list = []
-        if self.inventory[index] == '000':
+        if self.current_inv[index] == '000':
             pass
         else:
-            tooltip_surf = self.word_wrap(item_dict[self.inventory[index]]["item_tooltip"], self.game.small_font, (255,255,255), 0,0,200)
-            font_width, font_height = self.game.small_font.size(str(item_dict[self.inventory[index]]["item_name"]))
+            tooltip_surf = self.word_wrap(item_dict[self.current_inv[index]]["item_tooltip"], self.game.small_font, (255,255,255), 0,0,200)
+            font_width, font_height = self.game.small_font.size(str(item_dict[self.current_inv[index]]["item_name"]))
             new_surf = pg.Surface((tooltip_surf.get_rect().w, tooltip_surf.get_rect().h + font_height + 10)) 
             new_surf.fill((25,38,56))
-            self.text_render(new_surf, tooltip_surf.get_rect().w/2, 0, self.game.small_font,str(item_dict[self.inventory[index]]["item_name"]), (139,45,86))
+            self.text_render(new_surf, tooltip_surf.get_rect().w/2, 0, self.game.small_font,str(item_dict[self.current_inv[index]]["item_name"]), (139,45,86))
             new_surf.blit(tooltip_surf, (0,font_height + 10))
             self.game.screen.blit(new_surf, (x,y))
         

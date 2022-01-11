@@ -16,6 +16,7 @@ class Button():
             self.rect.topleft = (x,y)
         self.clicked, self.hover = False, False
         self.hover_time = 0
+        self.selected = False
     
     def checkCol(self, pos, actions, game):
         self.mouse_pos = ((pos[0] / self.game.RATIO_X), (pos[1]/self.game.RATIO_Y)) 
@@ -32,7 +33,20 @@ class Button():
     
         else:
             self.hover, self.clicked = False, False
-            self.image = self.images[0]
+            if not self.selected:
+                self.image = self.images[0]
             self.hover_time = 0
-    
+
+class Tab(Button): #for multi choice 
+    def __init__(self, x, y, image, image_hover, game, dir, align, imageclicked, name):
+        Button.__init__(self, x, y, image, image_hover, game, dir, align)
+        self.name = name
+        self.images.append(pg.image.load(os.path.join(self.game.button_dir, dir, imageclicked))) #while they can have a hover state, in reality switches usually flip between the on/off states. 
+        self.selected = False #checks if i
+
+    def checkCol(self, pos, actions, game):
+        super().checkCol(pos, actions, game)
+        if self.clicked == True: self.selected = True
+        if self.selected == True: self.image = self.images[2]
+  
     
