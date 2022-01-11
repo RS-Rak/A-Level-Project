@@ -32,7 +32,7 @@ class Player(Entity):
             old_y = self.rect.y
             self.rect.x += round(100 * delta_time * direction_x)
             self.rect.y += round(100 * delta_time * direction_y)
-            self.check_if_stuck(tiles, old_x, old_y)
+            #self.check_if_stuck(tiles, old_x, old_y)
     
                   
     def check_if_stuck(self, tiles, old_x, old_y):
@@ -105,9 +105,10 @@ class Player(Entity):
         
     def check_player_col(self, tiles, movement_x, movement_y):
         #new_rect = self.rect.move(movement_x, movement_y) 
-        collision_rect = pg.Rect((self.rect.midleft),(self.rect.w, self.rect.h/2) ) 
-        new_rect = collision_rect.move(movement_x, movement_y) 
+        self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)
+        self.collision_rect.midbottom = self.rect.midbottom 
+        new_rect = self.collision_rect.move(movement_x, movement_y) 
         check = False
-        if (new_rect.collidelistall(tiles)): #this tests every tile with the player rectangle
+        if (new_rect.collidelist(tiles) != -1): #this tests every tile with the player rectangle
             check = True
         return check

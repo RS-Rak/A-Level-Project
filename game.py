@@ -43,7 +43,6 @@ class Game():
     def game_loop(self):
         while self.playing:
             self.dt = self.clock.tick(self.FPS) / 1000 #gets delta_time from the self.clock.tick
-            #self.get_dt() #i haven't decided whether to use the above line or self.get_dt() yet
             self.get_events()
             self.update()
             self.render()
@@ -119,12 +118,6 @@ class Game():
         else: self.playing, self.running = False, False
         self.render_text()
         pygame.display.flip()
-    
-    def get_dt(self):
-        #this calculates delta time, the change in time between framerates to ensure framerate independece. 
-        now = time.time()
-        self.dt = now - self.prev_time
-        self.prev_time = now
     
     def draw_text(self, surface, text, color, x,y, font): 
         #this is one of my functions for drawing text to the screen. 
