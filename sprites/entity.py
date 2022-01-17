@@ -1,4 +1,6 @@
 import pygame as pg
+import os
+
 class Entity(pg.sprite.Sprite): #base sprite class. 
     def __init__(self,game):
         pg.sprite.Sprite.__init__(self)
@@ -12,3 +14,4 @@ class Entity(pg.sprite.Sprite): #base sprite class.
     
     def load_sprites(self):
         pass
+

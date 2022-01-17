@@ -6,11 +6,13 @@ from Utility.tilemap import *
 from Utility.util import *
 from states.ingame_states.inventory import *
 from sprites.player import *
+from sprites.chest import Chest
 
 class Game_World(State):
     def __init__(self, game, menu_img):
         State.__init__(self, game)
         
+    
         self.menu_img = menu_img
         self.all_sprites = pg.sprite.Group()
         self.start_time = time.time()
@@ -30,8 +32,10 @@ class Game_World(State):
         self.map_path = os.path.join(self.map_dir, str(self.game.save_data["current-map"]) + ".tmx")
 
         self.map = TiledMap(self.map_path, self.game)
+
         #self.spawn_data = load_data(os.path.join(self.map_dir,"spawn_data",str(self.game.save_data["current-map"]) + ".json"), False)
         self.collision_tiles = self.map.collision_tiles
+        
         self.exits = self.map.exits
         self.exit_names = self.map.exits_names
         
@@ -39,9 +43,22 @@ class Game_World(State):
         self.map.image = self.map.make_map()
         self.map.rect = self.map.image.get_rect()
         
-        self.all_sprites.add(self.map)
+        #self.all_sprites.add(self.map)
         self.all_sprites.add(self.player)
         self.camera = Camera(self.map.width, self.map.height)
+        self.spawn_entities()
+      
+        
+    def spawn_entities(self):
+        self.chest_list = []
+        for i in range(len(self.map.spawns)):
+            print()
+            if self.map.spawns[i].type == "Chest":
+                new_chest = Chest(self.game, self.map.spawns[i].x, self.map.spawns[i].y, self.map.spawns[i].name)
+                #print(object.x, object.y, object.type)
+                self.chest_list.append(new_chest)
+                self.collision_tiles.append(new_chest)
+                
     
     def get_player_location(self, map, prevmap): #gets the player location on the newmap
         self.spawn_data = load_data(os.path.join(self.map_dir,"spawn_data",str(map) + ".json"), False)
@@ -70,7 +87,18 @@ class Game_World(State):
             new_state = Inventory(self.game)
             self.game.reset_keys()
             new_state.enter_state()
-            
+        
+        if actions["interact"]:
+            collision_rect = self.player.rect.inflate(3,3)
+            for i in range(len(self.chest_list)):
+                if collision_rect.colliderect(self.chest_list[i]):   
+                    self.transparency = True
+                    self.render(self.game.game_canvas)
+                    new_state = ChestInventory(self.game, self.chest_list[i].data)
+                    self.game.reset_keys()
+                    new_state.enter_state()
+        
+          
         self.player.update(actions, delta_time, self.collision_tiles)
         changingMap, index = self.player.check_col(self.exits)
         
@@ -87,8 +115,11 @@ class Game_World(State):
         for i in range(len(self.exits)):
             self.camera.apply_rect(self.exits[i])
             
-        for tile in self.collision_tiles:
+        for tile in self.map.collision_tiles:
             display.blit(tile.image, self.camera.apply(tile))
+        display.blit(self.map.image, self.camera.apply(self.map))
+        for chest in self.chest_list:
+            display.blit(chest.image, self.camera.apply(chest))
         for sprite in self.all_sprites:
             display.blit(sprite.image, self.camera.apply(sprite))
         if self.transparency == True:

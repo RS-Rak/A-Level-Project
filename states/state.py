@@ -16,6 +16,14 @@ class State():
     def render_text(self):
         pass
     
+    def render_list(self, imagelist, display): #renders every image in a list
+        for i in range(len(imagelist)):
+            display.blit(imagelist[i].image, (imagelist[i].rect))
+    
+    def render_dict(self, imagedict, display): #same as above but for dicts
+        for i in imagedict:
+            display.blit(imagedict[i].image, (imagedict[i].rect))
+            
     def word_wrap(self,text, font, colour, x, y, allowed_width): #this is my word-wrap function - it helps keep the text nice and neat.
         words = text.split() #splits into words
         lines = []

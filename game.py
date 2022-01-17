@@ -11,7 +11,7 @@ class Game():
     def __init__(self):
         pg.init()
         self.GAME_W, self.GAME_H = 400, 224
-        self.SCREEN_W, self.SCREEN_H = 1920, 1080
+        self.SCREEN_W, self.SCREEN_H = pg.display.Info().current_w, pg.display.Info().current_h
         self.RATIO_X = self.SCREEN_W/self.GAME_W
         self.RATIO_Y = self.SCREEN_H/self.GAME_H
         self.game_canvas = pg.Surface((self.GAME_W, self.GAME_H))

@@ -48,5 +48,14 @@ class Tab(Button): #for multi choice
         super().checkCol(pos, actions, game)
         if self.clicked == True: self.selected = True
         if self.selected == True: self.image = self.images[2]
+
+class Slot(Button): #this is for inventory slots, as i also need some metadata for these - 
+                    #particularly what type of item is allowed in them I might add more features soon, but this'll do for now.
+    def __init__(self, x, y, image, image_hover, game, dir, align, metadata):
+        Button.__init__(self, x, y, image, image_hover, game, dir, align)
+        self.metadata = metadata
+    
+    def checkCol(self, pos, actions, game):
+        super().checkCol(pos, actions, game)
   
     

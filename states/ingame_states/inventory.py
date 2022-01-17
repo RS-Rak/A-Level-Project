@@ -1,115 +1,90 @@
-import time
+import copy
 import pygame as pg
-from states.state import State
 from states.UI.button import *
 from Utility.util import *
-from Utility.item_id import *
-import os 
-#inventory screen, visuals will be overhualed soon. additonal note, add stacking + ability to move items within it. 
-class Inventory(State):
-        
-    def __init__(self, game):
-        State.__init__(self, game)
-        self.image = pg.image.load(os.path.join(self.game.assets_dir, "in-game", "finalinventoryalt.png")).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.game.GAME_W/2, self.game.GAME_H/2)
-        self.inventory = self.game.save_data["inventory"]
-        self.current_inv = self.inventory[self.inventory["Current-Inv"]]
-        
-        self.slot_list = []
-        itemtab = Tab(self.rect.x, self.rect.y + 27, "item-tab.png", "item-tab-hover.png", self.game, "in-game", "topleft", "item-tab-clicked.png", "item-inv")
-        equipmentab = Tab(self.rect.x, 74 + self.rect.y, "equipment-tab.png", "equipment-tab-hover.png", self.game, "in-game", "topleft", "equipment-tab-clicked.png","equipment-inv")
-        spellstab = Tab(self.rect.x, 121 + self.rect.y, "spells-tab.png", "spells-tab-hover.png", self.game, "in-game", "topleft", "spells-tab-clicked.png", "spells-inv")
-        self.tab_list = [itemtab, equipmentab, spellstab]
-        if self.inventory["Current-Inv"] == "item-tab":
-            itemtab.selected = True
-            itemtab.image = itemtab.images[2]
-        elif self.inventory["Current-Inv"] == "equipment-tab":
-            equipmentab.selected = True
-            equipmentab.image = equipmentab.images[2]
-        elif self.inventory["Current-Inv"] == "spells-tab":
-            spellstab.selected = True
-            spellstab.image = spellstab.images[2]
-        
-        
-        self.x_offset, self.y_offset = 0,0
-        self.currently_held = None
-        for i in range(48):
-            slot = Button(self.rect.x + 21 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23, "inventory-slot.png", "inventory-slot-hover.png",self.game,"in-game", "topleft") #creates  buttons over inventory slots so i can tell when they're pressed. 
-            self.slot_list.append(slot)
-            self.x_offset += 1
-            if (i+1)%6 == 0:
-                self.y_offset += 1
-                self.x_offset = 0
-        
+from Utility.item_id import * 
+from states.ingame_states.inventory_manager import InventoryManager
 
-    
-    def update(self, delta_time, actions):
-        if actions['return'] or actions["inventory"]:
-            self.game.save_data["inventory"] = self.inventory
-            self.exit_state()
-        for i in range(len(self.slot_list)):
-            self.slot_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
-            if self.slot_list[i].clicked == True:
-                pass
-        for i in range(len(self.tab_list)):
-            if self.tab_list[i].selected != True:
-                self.tab_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
-                if self.tab_list[i].selected == True:
-                    for x in range(len(self.tab_list)):
-                        self.tab_list[x].selected = False
-                    self.tab_list[i].selected = True 
-                    self.current_inv = self.inventory[self.tab_list[i].name] 
-                    self.inventory["Current-Inv"] = self.tab_list[i].name
-                    
-        self.game.reset_keys()
-    
-    def render(self, display):
-        display.blit(self.image, (self.rect))
-        self.y_offset = 0
-        self.x_offset = 0
-        for i in range(48):
-            display.blit(self.slot_list[i].image, (self.slot_list[i].rect))
-        for i in range(3):
-            display.blit(self.tab_list[i].image, (self.tab_list[i].rect))
-        for i in range(48):
-            if self.current_inv[str(i + 1)] == "000":
-                pass
-            else:
-                display.blit(pg.image.load(item_dict[self.current_inv[str(i+1)]]["item_image"]).convert_alpha(), (23 + (self.x_offset * 23) + self.rect.x, 14 + (self.y_offset * 23) + self.rect.y)) 
-            
-            if (i+1)%6 == 0:
-                self.y_offset += 1
-                self.x_offset = 0  
-            self.x_offset += 1
+
+class Inventory(InventoryManager):
+    def __init__(self, game):
+        InventoryManager.__init__(self, game, "Inventory")
+        self.load_images()
         
-       
-            
-            
+        
+    def load_images(self):
+        for i in range(4):
+            self.equipped_armour.append(Slot(self.rect.x + 121, self.rect.y + 24 + i * 23, "equip-slot.png", 
+                        "equip-slot-hover.png",self.game,"in-game", "topleft", "armour"))   
+        for i in range(5):    
+            self.equipped_spells.append(Slot(self.rect.x + 173 + i*25, self.rect.y + 172, "equip-slot.png", 
+                        "equip-slot-hover.png",self.game,"in-game", "topleft", "spells"))
+        for i in range(2):
+            self.equipment.append(Slot(self.rect.x + 215 + i*25, self.rect.y + 133, "equip-slot.png", 
+                        "equip-slot-hover.png",self.game,"in-game", "topleft", "equipment"))  
+    
+    def render(self,display):
+        super().render(display)
+        
+    def update(self, delta_time, actions):   
+        super().update(delta_time, actions)    
+    
+          
     def display_tooltip(self, index,x,y): #displays a tooltip of the 
-        self.tooltip_list = []
-        if self.current_inv[index] == '000':
-            pass
-        else:
-            tooltip_surf = self.word_wrap(item_dict[self.current_inv[index]]["item_tooltip"], self.game.small_font, (255,255,255), 0,0,200)
-            font_width, font_height = self.game.small_font.size(str(item_dict[self.current_inv[index]]["item_name"]))
-            new_surf = pg.Surface((tooltip_surf.get_rect().w, tooltip_surf.get_rect().h + font_height + 10)) 
-            new_surf.fill((25,38,56))
-            self.text_render(new_surf, tooltip_surf.get_rect().w/2, 0, self.game.small_font,str(item_dict[self.current_inv[index]]["item_name"]), (139,45,86))
-            new_surf.blit(tooltip_surf, (0,font_height + 10))
-            self.game.screen.blit(new_surf, (x,y))
+        super().display_tooltip(index,x,y)
         
 
     def text_render(self, screen, x,y, font, text, color):    
-        text_surface = font.render(text, False, color)
-        #text_surface.set_colorkey((0,0,0)) #this is for transparent fonts
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x,y)
-        screen.blit(text_surface, text_rect)
+        super().text_render(screen,x,y,font,text,color)
     
     def render_text(self):
-        #I'm not actually using render text here to render - however, due to the way I've set up my game loop, if i want to render anything onto the full screen, I have to do it here rather than in the main render function, else it won't be rendered properly. 
-        for i in range(len(self.slot_list)):
-            if time.time() - self.slot_list[i].hover_time > 1 and self.slot_list[i].hover_time != 0:
-                self.display_tooltip(str(i+1), pg.mouse.get_pos()[0] + 5, pg.mouse.get_pos()[1] + 5)
-                
+        super().render_text()
+
+class ChestInventory(InventoryManager):
+    def __init__(self, game, chestinv):
+        InventoryManager.__init__(self, game, "Chest")
+        self.chest_inv = chestinv
+        self.load_images()
+        self.load_chest_items()
+        
+        
+    def load_images(self):
+        self.chest_slots = []
+        self.x_offset, self.y_offset = 0,0
+        for i in range(40):
+            slot = Slot(self.rect.x + 181 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23, "inventory-slot.png", 
+                        "inventory-slot-hover.png",self.game,"in-game", "topleft", "all")
+            self.chest_slots.append(slot)
+            self.x_offset += 1
+            if (i+1)%5 == 0:
+                self.y_offset += 1
+                self.x_offset = 0 
+        self.all_slots.append(self.chest_slots)
+    
+    def load_chest_items(self):
+        self.chest_items = []
+        for i in self.chest_inv:
+            if self.chest_inv[i] != "000":
+                item = copy.deepcopy(item_dict[self.chest_inv[i]])
+                item.set_loc((self.chest_slots[int(i) - 1].rect.x + 11, self.chest_slots[int(i)].rect.y + 11))
+                self.chest_items.append(item)
+    
+    def render(self,display):
+        super().render(display)
+        self.render_list(self.chest_slots, display)
+        self.render_list(self.chest_items, display)
+        
+    def update(self, delta_time, actions):   
+        super().update(delta_time, actions)    
+    
+          
+    def display_tooltip(self, index,x,y): #displays a tooltip of the 
+        super().display_tooltip(index,x,y)
+        
+
+    def text_render(self, screen, x,y, font, text, color):    
+        super().text_render(screen,x,y,font,text,color)
+    
+    def render_text(self):
+        super().render_text()
+         

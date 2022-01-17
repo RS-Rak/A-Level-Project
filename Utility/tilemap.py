@@ -15,6 +15,7 @@ class TiledMap(pg.sprite.Sprite):
         self.collision_tiles = [] #collision tiles
         self.exits = [] #this is the exits for the map. 
         self.exits_names = [] #we alos need the name for the exits
+        self.spawns = []
         self.image = ''
         for x, y, tile in self.collision_layer.tiles(): #gets the collision tiles
             if (tile):
@@ -36,8 +37,10 @@ class TiledMap(pg.sprite.Sprite):
                         surface.blit(tile, (x * self.tiledmap.tilewidth, y * self.tiledmap.tileheight))
             elif isinstance(layer, pytmx.TiledObjectGroup) and (layer != self.exit_layer):
                 for object in layer:
+                    self.spawns.append(object)
+                    print(object.name, object.x, object.y, object.type)
                     #ithis is where i'll put all the other object layers.  
-                     pass
+                     
     
     def make_map(self): #renders it to a temp surface so i only need to manipulate the layer. Convenient right? 
         temp_surface = pg.Surface((self.width, self.height))
