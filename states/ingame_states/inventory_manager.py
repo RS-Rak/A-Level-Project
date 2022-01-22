@@ -50,7 +50,7 @@ class InventoryManager(State):
         #self.load_images(inv_type)
         
     def update(self, delta_time, actions):
-        if actions['return'] or actions["interact"]:
+        if actions['return'] or actions["interact"] or actions["inventory"]:
             self.game.save_data["inventory"] = self.inventory
             self.exit_state()
             
