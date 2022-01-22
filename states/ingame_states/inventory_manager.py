@@ -1,9 +1,10 @@
 import pygame as pg
 from states.state import State
-from states.UI.button import *
+from states.Widgets.button import *
 import time
 import copy 
 from Utility.item_id import *
+from Utility.text import Text
 
 class InventoryManager(State):
     def __init__(self, game, inv_type):
@@ -92,23 +93,10 @@ class InventoryManager(State):
 
     def display_tooltip(self, index,x,y): #displays a tooltip of the 
         self.tooltip_list = []
-        if self.current_inv[index] == '000':
-            pass
-        else:
-            tooltip_surf = self.word_wrap(item_dict[self.current_inv[index]].tooltip, self.game.small_font, (255,255,255), 0,0,200)
-            font_width, font_height = self.game.small_font.size(str(item_dict[self.current_inv[index]].name))
-            new_surf = pg.Surface((tooltip_surf.get_rect().w, tooltip_surf.get_rect().h + font_height + 10)) 
-            new_surf.fill((25,38,56))
-            self.text_render(new_surf, tooltip_surf.get_rect().w/2, 0, self.game.small_font,str(item_dict[self.current_inv[index]].name), (139,45,86))
-            new_surf.blit(tooltip_surf, (0,font_height + 10))
-            self.game.screen.blit(new_surf, (x,y))
-
-    def text_render(self, screen, x,y, font, text, color):    
-        text_surface = font.render(text, False, color)
-        #text_surface.set_colorkey((0,0,0)) #this is for transparent fonts
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x,y)
-        screen.blit(text_surface, text_rect)
+        if self.current_inv[index] != '000':
+            tooltip = Text(self.game.small_font, item_dict[self.current_inv[index]].tooltip, 200, (255,255,255), 
+                           item_dict[self.current_inv[index]].name, (193,45,86),(25,38,56))
+            self.game.screen.blit(tooltip.image, (x,y))
     
     def render_text(self):
         #I'm not actually using render text here to render - however, due to the way I've set up my game loop, if i want to render anything onto the full screen, I have to do it here rather than in the main render function, else it won't be rendered properly. 

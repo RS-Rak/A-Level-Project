@@ -52,10 +52,8 @@ class Game_World(State):
     def spawn_entities(self):
         self.chest_list = []
         for i in range(len(self.map.spawns)):
-            print()
             if self.map.spawns[i].type == "Chest":
                 new_chest = Chest(self.game, self.map.spawns[i].x, self.map.spawns[i].y, self.map.spawns[i].name)
-                #print(object.x, object.y, object.type)
                 self.chest_list.append(new_chest)
                 self.collision_tiles.append(new_chest)
                 

@@ -2,7 +2,7 @@ import pygame as pg
 import pygame
 import os, time
 
-from states.menu import *
+from states.menus import *
 
 
 

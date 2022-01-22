@@ -1,6 +1,6 @@
 import copy
 import pygame as pg
-from states.UI.button import *
+from states.Widgets.button import *
 from Utility.util import *
 from Utility.item_id import * 
 from states.ingame_states.inventory_manager import InventoryManager

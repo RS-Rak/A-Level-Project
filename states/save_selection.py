@@ -1,5 +1,5 @@
 from states.state import *
-from states.UI.button import *
+from states.Widgets.button import *
 from Utility.util import *
 from states.ingame_states.game_world import *
 
@@ -19,10 +19,7 @@ class Save_Selection(State):
         
     def reset_save_slot(self, index):
         clear_save(index, default_data())
-        pass   
-            
-    
-    
+           
     def update(self, delta_time, actions):
         if actions['return']:
             self.exit_state()

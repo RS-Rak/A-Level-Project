@@ -1,8 +1,7 @@
-import json
-import pygame as pg
 from states.state import State
-from states.UI.button import *
-from Utility.util import *
+
+
+
 class Option(State):
     
     def __init__(self, game, menu_img):
@@ -35,7 +34,3 @@ class Credits(State):
     
     def render_text(self):
         self.game.draw_text(None, "CREDITS TO BE ADDED", (0,0,0), self.game.GAME_W/2, self.game.GAME_H * 0.35, self.game.font)
-
-
-        
-

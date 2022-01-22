@@ -1,9 +1,9 @@
 
 from states.state import State
-from states.option import *
 from states.save_selection import *
 from states.ingame_states.game_world import *
-from states.UI.button import *
+from states.Widgets.button import *
+from states.option import *
 import pygame as pg
 import os
 
@@ -47,4 +47,3 @@ class Menu(State):
         for button in self.button_list:
             display.blit(button.image, (button.rect.x , button.rect.y))
             
-

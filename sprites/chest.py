@@ -13,5 +13,6 @@ class Chest(Entity):
         try:
             self.data = load_data(os.path.join("assets","saved_data","chests","{}.json".format(inv_id)), False)
         except:
+            print("Couldn't load chest data!")
             self.data = {}
         

@@ -1,8 +1,8 @@
 from Utility.util import *
 from states.state import State
-from states.UI.button import *
+from states.Widgets.button import *
 import pygame as pg
-from states.option import Option
+from states.option import *
 import time
 #this is my pause menu.
 

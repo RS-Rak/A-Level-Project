@@ -38,7 +38,7 @@ class TiledMap(pg.sprite.Sprite):
             elif isinstance(layer, pytmx.TiledObjectGroup) and (layer != self.exit_layer):
                 for object in layer:
                     self.spawns.append(object)
-                    print(object.name, object.x, object.y, object.type)
+                    #print(object.name, object.x, object.y, object.type) #this is just so I can see the current location of all objects 
                     #ithis is where i'll put all the other object layers.  
                      
     
