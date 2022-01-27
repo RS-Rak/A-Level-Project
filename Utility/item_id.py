@@ -11,7 +11,7 @@ class Item():
         self.damage = damage
         self.effect = effect
         self.tooltip = tooltip
-        self.slot_number = None
+        
     
     def set_loc(self, loc):
         self.image = pg.image.load(self.path)
@@ -24,7 +24,7 @@ item_dict = {
     "001": Item("Simple Sword", os.path.join("assets","icons","Swords","default-sword.png"), "Equipment", "Sword", 5, None, 
                 "A simple blade, the kind that you'd see wielded by merchant's guards. ")
     ,
-    "002":  Item("Piss", os.path.join("assets", "icons", "Potions","healing-potion.png"), "Item", "Potion", 5, "Healing", 
+    "002":  Item("Healing Potion", os.path.join("assets", "icons", "Potions","healing-potion.png"), "Item", "Potion", 5, "Healing", 
                  "A simple healing potion, crafted with the most basic of magics." )
         
     
