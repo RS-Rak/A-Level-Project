@@ -3,7 +3,7 @@ import os
 from sprites.entity import *
 from pygame import Vector2
 
-class Player(Entity):
+class Player(AnimationEntity):
     def __init__(self,x,y, game):
         Entity.__init__(self,game)
         self.load_sprites()

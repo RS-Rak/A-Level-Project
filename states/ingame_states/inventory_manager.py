@@ -3,7 +3,7 @@ from states.state import State
 from states.Widgets.button import *
 import time
 import copy 
-from Utility.item_id import *
+from Utility.data import *
 from Utility.text import Text
 
 class InventoryManager(State):

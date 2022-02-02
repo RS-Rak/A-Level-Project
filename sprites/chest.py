@@ -3,6 +3,7 @@ import os
 from sprites.entity import *
 from Utility.util import *
 
+
 class Chest(Entity):
     def __init__(self, game,x,y,inv_id): 
         Entity.__init__(self, game)
@@ -13,6 +14,6 @@ class Chest(Entity):
         try:
             self.data = load_data(os.path.join("assets","saved_data","chests","{}.json".format(inv_id)), False)
         except:
-            print("Couldn't load chest data!")
+            print("Chest data not found!")
             self.data = {}
         

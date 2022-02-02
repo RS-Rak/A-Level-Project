@@ -1,4 +1,8 @@
-import json, os, pygame
+
+import json
+import os
+import pygame
+import time
 #this file is mostly for json data manipulation. 
 
 def default_data():
@@ -58,7 +62,7 @@ def clear_save(index, data):
     with open((os.path.join("assets","saved_data","save_slots","save_slot_{}.json".format(str(index + 1)))),'w') as file:
         json.dump(data, file)
 
-def load_data(path, is_save):
+def load_data(path, is_save = False):
     if is_save:
         with open((os.path.join("assets","saved_data","save_slots","save_slot_{}.json".format(str(path + 1)))),'r+') as file:
             data = json.load(file)
@@ -91,8 +95,20 @@ def convert_time(time):
     return "{} : {} : {}".format(str(hours), str(minutes), str(seconds))
 
 
-#options to be added. 
-#for i in range(3):
- #  clear_save(i, default_data())
-#this is for resetting my json files. 
-
+class Timer():
+    def __init__(self, time, trigger):
+        self.timer = time 
+        self.timer_started = False
+        self.timer_finished = False
+        self.trigger = trigger
+                
+    def start_timer(self): 
+        self.start_time = time.time()
+        self.timer_started = True
+    
+    def update(self):
+        if time.time() - self.start_time >= self.timer:
+            try : eval(self.trigger)
+            except: pass
+            self.timer_finished = True
+    #note, maybe add a continuous timer? food for thought. 

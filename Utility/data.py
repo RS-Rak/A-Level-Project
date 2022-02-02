@@ -25,12 +25,14 @@ item_dict = {
                 "A simple blade, the kind that you'd see wielded by merchant's guards. ")
     ,
     "002":  Item("Healing Potion", os.path.join("assets", "icons", "Potions","healing-potion.png"), "Item", "Potion", 5, "Healing", 
-                 "A simple healing potion, crafted with the most basic of magics." )
-        
-    
-    
-    
-    
+                 "A simple healing potion, crafted with the most basic of magics." )  
+}
+enemy_dict = {
+    "player": {
+        "HP": 400,
+        "ATTACK-SPEED": 8,
+        "ENTITY-SPEED": 100,
+    } 
 }
 """
 format below:

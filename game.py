@@ -22,6 +22,7 @@ class Game():
         self.save_slot = None
         #Player controlled actions. I'll insert more/change when necessary. 
         self.actions ={
+            "move": False,
             "left": False,
             "right": False,
             "up": False,
@@ -101,7 +102,8 @@ class Game():
                     self.actions['attack'] = False
                 if event.button == 3:
                     self.actions['alt-attack'] = False
-    
+        
+        
     def update(self):
         self.state_stack[-1].update(self.dt, self.actions) #updates whatevers on top of the state stack
     
