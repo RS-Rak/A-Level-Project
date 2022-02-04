@@ -27,7 +27,7 @@ item_dict = {
     "002":  Item("Healing Potion", os.path.join("assets", "icons", "Potions","healing-potion.png"), "Item", "Potion", 5, "Healing", 
                  "A simple healing potion, crafted with the most basic of magics." )  
 }
-enemy_dict = {
+entity_dict = {
     "player": {
         "HP": 400,
         "ATTACK-SPEED": 8,

@@ -1,4 +1,5 @@
 import pygame as pg
+from pygame import Vector2
 import time
 from states.state import *
 from states.pause_menu import *
@@ -21,6 +22,8 @@ class Game_World(State):
         
         self.playerx = self.game.save_data["playerx"]
         self.playery = self.game.save_data["playery"] #loads the saved player location data. 
+        self.player = Player(self.game, self.game.player_spritesheet, os.path.join(self.game.sprite_dir, "spritedata", "player.json"), "Player", 
+                             (self.playerx, self.playery), entity_dict["player"], [None] )
         self.get_tilemap()
          
         self.transparent_screen = pg.Surface((self.game.GAME_W, self.game.GAME_H))
@@ -39,7 +42,6 @@ class Game_World(State):
         self.exits = self.map.exits
         self.exit_names = self.map.exits_names
         
-        self.player = Player(self.playerx, self.playery, self.game)
         self.map.image = self.map.make_map()
         self.map.rect = self.map.image.get_rect()
         
@@ -98,12 +100,13 @@ class Game_World(State):
         
           
         self.player.update(actions, delta_time, self.collision_tiles)
-        changingMap, index = self.player.check_col(self.exits)
-        
-        if changingMap:
+        index = self.player.rect.collidelist(self.exits)
+        if index != -1:
             self.get_player_location(self.exit_names[index], str(self.game.save_data["current-map"]))
             self.game.save_data["current-map"] = self.exit_names[index]
             self.get_tilemap()
+            self.player.rect.x = self.playerx
+            self.player.rect.y = self.playery
         #self.game.reset_keys()
     
     def render(self, display):

@@ -143,6 +143,8 @@ class Game():
         self.icon_dir = os.path.join(self.assets_dir, "icons")
         self.background_dir = os.path.join(self.assets_dir, "background")
         
+        self.player_spritesheet = pg.image.load(os.path.join(self.sprite_dir, "spritesheets", "player-spritesheet.png")).convert_alpha()
+        
     def load_states(self):
         #this puts the main menu as the first thing in the stack because why not
         self.title_screen = Menu(self)
