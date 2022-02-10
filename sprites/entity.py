@@ -38,10 +38,8 @@ class AnimationEntity(Entity):
         self.speed = int(self.stats["ENTITY-SPEED"])
         self.attack_speed = int(self.stats["ATTACK-SPEED"])
         self.hp = int(self.stats["HP"])
+        self.velocity = Vector2(0,0)
         
-        #this might need to be taken out. 
-        #self.hitbox_data = hitbox
-        #self.hitbox = pg.Rect(Vector2(self.rect.center) - Vector2(self.hitbox_data[0]), Vector2(self.rect.center) + Vector2(self.hitbox[1]))
         self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)
         self.collision_rect.midbottom = self.rect.midbottom
     
@@ -65,9 +63,8 @@ class AnimationEntity(Entity):
     def move(self, dt, collisions):
         new_rect = self.collision_rect.move(self.direction_x, self.direction_y)
         if new_rect.collidelist(collisions) == -1:
-            self.rect.x += round(self.speed * dt * self.direction_x)
-            self.rect.y += round(self.speed * dt * self.direction_y) 
-        #self.hitbox = pg.Rect(Vector2(self.rect.center) - Vector2(self.hitbox_data[0]), Vector2(self.rect.center) + Vector2(self.hitbox[1]))
+            self.velocity = Vector2(self.speed * dt * self.direction_x, self.speed * dt * self.direction_y)
+            self.rect.center += self.velocity 
         self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)
         self.collision_rect.midbottom = self.rect.midbottom
     
@@ -92,6 +89,25 @@ class AnimationEntity(Entity):
             self.current_direction = "up"
         if actions["down"]:
             self.current_direction = "down"
+    
+    def check_hits(self, entity):
+        if entity.attack_hitbox != None:
+            if entity.attack_hitbox.collide_rect(self.hitbox):
+                self.take_damage(entity)
+
+    def take_damage(self, entity):
+        self.hp -= entity.damage
+        if self.hp < 0: 
+            self.state = "dead" #note, put something in game_world to check when the player is dead. 
+        for x in entity.weapon.effects:
+            pass #ok the plan here is to add the effect stuff. i.e. making it so that we have poison effects and stuff for the swords
+    
+    
+    
+    
+    
+    
+    
     
 class Enemy(AnimationEntity):
     def __init__(self, 
