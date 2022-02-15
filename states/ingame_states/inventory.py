@@ -4,6 +4,7 @@ from states.Widgets.button import *
 from Utility.util import *
 from Utility.data import * 
 from states.ingame_states.inventory_manager import InventoryManager
+import os
 
 
 class Inventory(InventoryManager):
@@ -14,14 +15,14 @@ class Inventory(InventoryManager):
         
     def load_images(self):
         for i in range(4):
-            self.equipped_armour.append(Slot(self.rect.x + 121, self.rect.y + 24 + i * 23, "equip-slot.png", 
-                        "equip-slot-hover.png",self.game,"in-game", "topleft", "armour"))   
+            self.equipped_armour.append(ImageButton((self.rect.x + 121, self.rect.y + 24 + i * 23), "equip-slot.png", 
+                                                    "equip-slot-hover.png", self.game, os.path.join("assets", "buttons", "in-game"), "topleft", "armour"))
         for i in range(5):    
-            self.equipped_spells.append(Slot(self.rect.x + 173 + i*25, self.rect.y + 172, "equip-slot.png", 
-                        "equip-slot-hover.png",self.game,"in-game", "topleft", "spells"))
+            self.equipped_spells.append(ImageButton((self.rect.x + 173 + i*25, self.rect.y + 172), "equip-slot.png", 
+                                                    "equip-slot-hover.png", self.game ,os.path.join("assets", "buttons","in-game"), "topleft", "spells"))
         for i in range(2):
-            self.equipment.append(Slot(self.rect.x + 215 + i*25, self.rect.y + 133, "equip-slot.png", 
-                        "equip-slot-hover.png",self.game,"in-game", "topleft", "equipment"))  
+            self.equipment.append(ImageButton((self.rect.x + 215 + i*25, self.rect.y + 133), "equip-slot.png", 
+                                                    "equip-slot-hover.png",self.game,os.path.join("assets", "buttons","in-game"), "topleft", "equipment"))  
     
     def render(self,display):
         super().render(display)
@@ -37,7 +38,7 @@ class Inventory(InventoryManager):
     def text_render(self, screen, x,y, font, text, color):    
         super().text_render(screen,x,y,font,text,color)
     
-    def render_text(self):
+    def render_text(self, display):
         super().render_text()
 
 class ChestInventory(InventoryManager):
@@ -52,8 +53,8 @@ class ChestInventory(InventoryManager):
         self.chest_slots = []
         self.x_offset, self.y_offset = 0,0
         for i in range(40):
-            slot = Slot(self.rect.x + 181 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23, "inventory-slot.png", 
-                        "inventory-slot-hover.png",self.game,"in-game", "topleft", "all")
+            slot = ImageButton((self.rect.x + 181 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23), "inventory-slot.png", 
+                        "inventory-slot-hover.png",self.game,os.path.join("assets", "buttons","in-game"), "topleft", "all")
             self.chest_slots.append(slot)
             self.x_offset += 1
             if (i+1)%5 == 0:
@@ -85,6 +86,6 @@ class ChestInventory(InventoryManager):
     def text_render(self, screen, x,y, font, text, color):    
         super().text_render(screen,x,y,font,text,color)
     
-    def render_text(self):
-        super().render_text()
+    def render_text(self, display):
+        super().render_text(display)
          

@@ -1,4 +1,4 @@
-
+from datetime import datetime 
 import pygame as pg
 from sprites.animation import Animation
 from pygame import Vector2
@@ -8,12 +8,20 @@ class Entity(pg.sprite.Sprite): #base sprite class.
     def __init__(self,game):
         pg.sprite.Sprite.__init__(self)
         self.game = game
+        self._layer = 0
 
     def update(self, actions, delta_time, tiles):
         pass
     
     def load_sprites(self):
         pass
+    
+    def render(self, camera, display):
+        display.blit(self.image, camera.apply_rect(self.rect))
+    
+    def get_world_loc(self, map):
+        return Vector2(self.rect.x, self.rect.y) -  Vector2(map.rect.x, map.rect.y)       
+        
 
 
 class AnimationEntity(Entity):
@@ -24,9 +32,9 @@ class AnimationEntity(Entity):
                  name: str, 
                  pos: Vector2, 
                  stats: dict, 
-                 hitbox: list,
                  curr_direction : str = "down"):
         super().__init__(game)
+        self._layer = 3
         
         self.animation = Animation(spritesheet, spritedata, pos, curr_direction)
         self.image = self.animation.image
@@ -42,6 +50,7 @@ class AnimationEntity(Entity):
         
         self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)
         self.collision_rect.midbottom = self.rect.midbottom
+       
     
     def update(self, actions, dt, collisions):
         self.get_actions(actions, dt)
@@ -63,11 +72,10 @@ class AnimationEntity(Entity):
     def move(self, dt, collisions):
         new_rect = self.collision_rect.move(self.direction_x, self.direction_y)
         if new_rect.collidelist(collisions) == -1:
-            self.velocity = Vector2(self.speed * dt * self.direction_x, self.speed * dt * self.direction_y)
+            self.velocity = Vector2(round(self.speed * dt * self.direction_x), round(self.speed * dt * self.direction_y))
             self.rect.center += self.velocity 
         self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)
         self.collision_rect.midbottom = self.rect.midbottom
-    
     
     def entity_in_sight(self, entity1, entity2, walls): # player rect
         entity1_pos = Vector2(entity1.center)

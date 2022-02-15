@@ -1,15 +1,18 @@
 import pytmx
-import pygame as pg 
+import pygame as pg
+from sprites.entity import Entity 
 #This file is responsible for the creation of the tilemap. 
 
-class TiledMap(pg.sprite.Sprite):
+class TiledMap(Entity):
     def __init__(self, filename, game):
-        pg.sprite.Sprite.__init__(self)
+        super().__init__(game)
+        
         self._layer = 1
-        self.game = game
+        
         self.tiledmap = pytmx.load_pygame(filename, pixelalpha = True) #loads the file
         self.width = self.tiledmap.width * self.tiledmap.tilewidth
         self.height = self.tiledmap.height * self.tiledmap.tileheight
+        
         self.collision_layer = self.tiledmap.get_layer_by_name('collisions') #grabs the collision layers
         self.exit_layer = self.tiledmap.get_layer_by_name("Exits")
         self.collision_tiles = [] #collision tiles
@@ -17,9 +20,10 @@ class TiledMap(pg.sprite.Sprite):
         self.exits_names = [] #we alos need the name for the exits
         self.spawns = []
         self.image = ''
+        
         for x, y, tile in self.collision_layer.tiles(): #gets the collision tiles
             if (tile):
-                new_tile = Collision_Tile(x * self.tiledmap.tilewidth, y * self.tiledmap.tileheight, self.tiledmap.tilewidth)
+                new_tile = Collision_Tile(game, x * self.tiledmap.tilewidth, y * self.tiledmap.tileheight, self.tiledmap.tilewidth)
                 self.collision_tiles.append(new_tile)
                 
         for object in self.exit_layer: #gets the exit rects.
@@ -27,7 +31,7 @@ class TiledMap(pg.sprite.Sprite):
             self.exits_names.append(object.name)
             self.exits.append(new_rect)
         
-    def render(self, surface): #renders the whole thing
+    def render_image(self, surface): #renders the whole thing
         get_ti = self.tiledmap.get_tile_image_by_gid
         for layer in self.tiledmap.layers: #renders layer by layer, all in their relative position
             if isinstance(layer, pytmx.TiledTileLayer):
@@ -44,15 +48,16 @@ class TiledMap(pg.sprite.Sprite):
     
     def make_map(self): #renders it to a temp surface so i only need to manipulate the layer. Convenient right? 
         temp_surface = pg.Surface((self.width, self.height))
-        self.render(temp_surface)
+        self.render_image(temp_surface)
         self.image = temp_surface
         return temp_surface
     
     def update(self): #I had this here in case of using all.sprites.list.update - still gonna keep it just in case. 
         pass
  
-class Collision_Tile(): #collisiomn tiles are their own class so i can create a bunch easily. 
-    def __init__(self, x, y, tilesize):
+class Collision_Tile(Entity): #collisiomn tiles are their own class so i can create a bunch easily. 
+    def __init__(self, game, x, y, tilesize):
+        super().__init__(game)
         self.image=pg.Surface((tilesize, tilesize))
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()

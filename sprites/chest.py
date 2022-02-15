@@ -5,8 +5,9 @@ from Utility.util import *
 
 
 class Chest(Entity):
-    def __init__(self, game,x,y,inv_id): 
+    def __init__(self, game,x,y,inv_id, curr_map: str): 
         Entity.__init__(self, game)
+        self._layer = 2
         self.image = pg.image.load(os.path.join(self.game.sprite_dir, "chest.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -14,6 +15,6 @@ class Chest(Entity):
         try:
             self.data = load_data(os.path.join("assets","saved_data","chests","{}.json".format(inv_id)), False)
         except:
-            print("Chest data not found!")
+            self.game.error_log.append(ConsoleOutput(f"On creation of map {curr_map}, couldn't find chest data for chest at world co-ordinates: {str(self.rect.center)}."))
             self.data = {}
         

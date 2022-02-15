@@ -73,9 +73,7 @@ class Animation():
         for key in self.spritedata:
             if isinstance(self.spritedata[key], dict):
                 self.load_sprites_list(key)
-            else:
-                print("Not a dict.")
-        print(self.animation_dict)
+       
     
     def load_sprites_list(self, key):
         self.animation_dict.update({key: {}}) 

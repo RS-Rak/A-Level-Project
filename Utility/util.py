@@ -1,48 +1,13 @@
-
+from Utility.data import default_data
+from Utility.text import Text
 import json
 import os
 import pygame
 import time
+from datetime import datetime
+
 #this file is mostly for json data manipulation. 
 
-def default_data():
-    data = {
-        "time-played":0,
-        "name": "???",
-        "save-logo": None,
-        "current-location": "grandma's-temple",
-        "current-map": "test-map",
-        "playerx": 265,
-        "playery": 298,
-        "cutscenes": {
-            "opening-cutscene": False,
-            "book-discovery": False,
-        #I'll add more cutscene names here as I go. See cutscene- notes.txt for more info 
-            
-        },
-        "inventory": {
-            "Current-Inv": "item-inv", 
-            "EquippedWeapon": "000",
-            "EquippedArmor":"000",
-            "Hitpoints": 10,
-            "Mana": 10,
-            "Ability1": "000",
-            "Ability2": "000",
-            "Ability3": "000",
-            "Ability4": "000",
-            "Ultimate": "000",
-            "item-inv":{
-                 1: "002", 2: "000",3: "000", 4: "000", 5: "000", 6: "000", 7: "000", 8: "000", 9: "000", 10:"000", 11: "000", 12: "000",13: "000", 14: "000", 15: "000", 16: "000", 17: "000", 18: "000", 19: "000", 20:"000", 21: "002", 22: "000",23: "000", 24: "000", 25: "000", 26: "002", 27: "000", 28: "000", 29: "000", 30:"000",  31: "000", 32: "000",33: "002", 34: "000", 35: "000", 36: "000", 37: "000", 38: "000", 39: "000", 40:"000", 41: "000", 42: "000",43: "000", 44: "000", 45: "000", 46: "000", 47: "000", 48: "000"
-                     },
-            "equipment-inv":{
-                 1: "001", 2: "000",3: "000", 4: "000", 5: "000", 6: "000", 7: "000", 8: "000", 9: "000", 10:"000", 11: "001", 12: "000",13: "000", 14: "000", 15: "000", 16: "000", 17: "000", 18: "000", 19: "000", 20:"000", 21: "001", 22: "000",23: "000", 24: "000", 25: "000", 26: "000", 27: "000", 28: "000", 29: "000", 30:"000",  31: "001", 32: "000",33: "000", 34: "000", 35: "000", 36: "000", 37: "000", 38: "000", 39: "000", 40:"000", 41: "001", 42: "000",43: "000", 44: "000", 45: "000", 46: "000", 47: "000", 48: "000"
-                     },
-            "spells-inv":{
-                 1: "000", 2: "000",3: "000", 4: "000", 5: "000", 6: "000", 7: "000", 8: "000", 9: "000", 10:"000", 11: "000", 12: "000",13: "000", 14: "000", 15: "000", 16: "000", 17: "000", 18: "000", 19: "000", 20:"000", 21: "000", 22: "000",23: "000", 24: "000", 25: "000", 26: "000", 27: "000", 28: "000", 29: "000", 30:"000",  31: "000", 32: "000",33: "000", 34: "000", 35: "000", 36: "000", 37: "000", 38: "000", 39: "000", 40:"000", 41: "000", 42: "000",43: "000", 44: "000", 45: "000", 46: "000", 47: "000", 48: "000"
-                     }
-            }  
-    }
-    return data
 
 def get_logos(ID):
     logos = {
@@ -94,6 +59,14 @@ def convert_time(time):
         hours = "0" + str(hours)
     return "{} : {} : {}".format(str(hours), str(minutes), str(seconds))
 
+def ConsoleOutput(message):
+    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    return f"[{now}] " + message
+
+def debug(info, font, display, x=10, y=10):
+    debug_surf = Text(font, info, 500, (255,255,255), None, (255,255,255), (0,0,0), (0,0,0))
+    display.blit(debug_surf.image, (x,y))
+    
 
 class Timer():
     def __init__(self, time, trigger):
@@ -112,3 +85,5 @@ class Timer():
             except: pass
             self.timer_finished = True
     #note, maybe add a continuous timer? food for thought. 
+
+

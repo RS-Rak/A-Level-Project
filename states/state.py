@@ -13,7 +13,7 @@ class State():
         #surface here is gonna be the game canvas
         pass
     
-    def render_text(self):
+    def render_text(self, display):
         pass
     
     def render_list(self, imagelist, display): #renders every image in a list

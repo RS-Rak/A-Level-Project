@@ -2,8 +2,8 @@ import pygame as pg
 import pygame
 import os, time
 
-from states.menus import *
-
+from states.main_menu import *
+from Utility.settings import *
 
 
 
@@ -32,12 +32,19 @@ class Game():
             "alt-attack":False,
             "start": False,  
             "return":False,
-            "inventory": False         
+            "inventory": False,
+            "console": False,
+            "backspace": False,  
         }
         self.dt, self.prev_time = 0 , 0 #This is for framerate indepence annd delta time.
         self.state_stack =[] #this is a list, but i'm gonna treat it like a stack. 
         self.clock = pg.time.Clock() # clockin
-        self.FPS = 200
+        
+        self.FPS = 60
+        self.error_log = ["CONSOLE LOG:"]
+        self.text = ''
+        self.DEBUG = True
+        
         self.load_assets()
         self.load_states()
     
@@ -72,6 +79,10 @@ class Game():
                     self.actions['start'] = True
                 if event.key == pg.K_TAB:
                     self.actions['inventory'] = True
+                if event.key == pg.K_BACKQUOTE:
+                    self.actions['console'] = True
+                if event.key == pg.K_BACKSPACE:
+                    self.actions["backspace"] = True
                     
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -96,20 +107,30 @@ class Game():
                     self.actions['start'] = False
                 if event.key == pg.K_TAB:
                     self.actions["inventory"] = False
+                if event.key == pg.K_BACKQUOTE:
+                    self.actions['console'] = False
+                if event.key == pg.K_BACKSPACE:
+                    self.actions["backspace"] = False
                     
             if event.type == pg.MOUSEBUTTONUP:
                 if event.button == 1:
                     self.actions['attack'] = False
                 if event.button == 3:
                     self.actions['alt-attack'] = False
-        
+
+            if event.type == pg.TEXTINPUT:
+                self.text += event.text
+                
+            
         
     def update(self):
         self.state_stack[-1].update(self.dt, self.actions) #updates whatevers on top of the state stack
     
     def render_text(self): #renders text - text has to be rendered last else it'll blur oddly.
         if len(self.state_stack) > 0:
-            self.state_stack[-1].render_text()
+            self.state_stack[-1].render_text(self.screen)
+        if self.DEBUG:
+            debug(str(self.clock.get_fps())[:2], self.font, self.screen)
         pygame.display.flip()
         
     def render(self):
@@ -117,7 +138,11 @@ class Game():
         if len(self.state_stack) > 0:
             self.state_stack[-1].render(self.game_canvas)
             self.screen.blit(pygame.transform.scale(self.game_canvas,(self.SCREEN_W, self.SCREEN_H)), (0,0))
-        else: self.playing, self.running = False, False
+        else: 
+            self.playing, self.running = False, False
+           # for x in range(len(self.error_log)):
+            #    print(self.error_log[x])
+                
         self.render_text()
         pygame.display.flip()
     
@@ -137,7 +162,8 @@ class Game():
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
         self.font_dir = os.path.join(self.assets_dir, "font")     
         self.button_dir = os.path.join(self.assets_dir, "buttons")
-        self.font = pygame.font.Font(os.path.join(self.font_dir, "m6x11.ttf") , 60) 
+        self.font = pygame.font.Font(os.path.join(self.font_dir, "m6x11.ttf") , 60)
+        self.button_font = pg.font.Font(os.path.join(self.font_dir, "m6x11.ttf"), 36) 
         self.small_font = pygame.font.Font(os.path.join(self.font_dir, "m6x11.ttf") , 30) 
         self.alt_font = pygame.font.Font(os.path.join(self.font_dir, "pixelfont.ttf") , 144) 
         self.icon_dir = os.path.join(self.assets_dir, "icons")

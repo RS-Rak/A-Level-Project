@@ -5,6 +5,7 @@ import time
 import copy 
 from Utility.data import *
 from Utility.text import Text
+import os 
 
 class InventoryManager(State):
     def __init__(self, game, inv_type):
@@ -22,12 +23,12 @@ class InventoryManager(State):
         self.currently_held = None
         
         self.tab_list = {
-            "item-tab":Tab(self.rect.x, self.rect.y + 27, "item-tab.png", "item-tab-hover.png", self.game, "in-game",
+            "item-tab":Tab((self.rect.x, self.rect.y + 27), "item-tab.png", "item-tab-hover.png", self.game, os.path.join("assets", "buttons","in-game"),
                           "topleft", "item-tab-clicked.png", "item-inv"),
-            "equipment-tab":Tab(self.rect.x, 74 + self.rect.y, "equipment-tab.png", "equipment-tab-hover.png", self.game, "in-game", 
+            "equipment-tab":Tab((self.rect.x, 74 + self.rect.y), "equipment-tab.png", "equipment-tab-hover.png", self.game, os.path.join("assets", "buttons","in-game"), 
                                "topleft", "equipment-tab-clicked.png","equipment-inv"),
-            "spells-tab": Tab(self.rect.x, 121 + self.rect.y, "spells-tab.png", "spells-tab-hover.png", self.game, 
-                              "in-game", "topleft", "spells-tab-clicked.png", "spells-inv")
+            "spells-tab": Tab((self.rect.x, 121 + self.rect.y), "spells-tab.png", "spells-tab-hover.png", self.game, 
+                              os.path.join("assets", "buttons","in-game"), "topleft", "spells-tab-clicked.png", "spells-inv")
         }
         
         for i in self.tab_list:
@@ -38,8 +39,8 @@ class InventoryManager(State):
         self.slot_list = []
         self.equipment, self.equipped_spells, self.equipped_armour = [], [], []
         for i in range(48):
-            slot = Slot(self.rect.x + 21 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23, "inventory-slot.png", 
-                        "inventory-slot-hover.png",self.game,"in-game", "topleft", "all")
+            slot = ImageButton((self.rect.x + 21 + self.x_offset * 23, self.rect.y + 12 + self.y_offset * 23), "inventory-slot.png", 
+                        "inventory-slot-hover.png",self.game,os.path.join("assets", "buttons","in-game"), "topleft", "all")
             self.slot_list.append(slot)
             self.x_offset += 1
             if (i+1)%6 == 0:
@@ -57,14 +58,14 @@ class InventoryManager(State):
             
         for i in range(len(self.all_slots)):
             for x in range(len(self.all_slots[i])):
-                self.all_slots[i][x].checkCol(pg.mouse.get_pos(), actions, self.game)
+                self.all_slots[i][x].checkCol(pg.mouse.get_pos(), actions)
                 if self.all_slots[i][x].clicked == True:
                     pass
                 #self.current_inv[i] 
             
         for i in self.tab_list:
             if self.tab_list[i].selected != True:
-                self.tab_list[i].checkCol(pg.mouse.get_pos(), actions, self.game)
+                self.tab_list[i].checkCol(pg.mouse.get_pos(), actions)
                 if self.tab_list[i].selected == True:
                     for x in self.tab_list:
                         self.tab_list[x].selected = False
@@ -95,10 +96,10 @@ class InventoryManager(State):
         self.tooltip_list = []
         if self.current_inv[index] != '000':
             tooltip = Text(self.game.small_font, item_dict[self.current_inv[index]].tooltip, 200, (255,255,255), 
-                           item_dict[self.current_inv[index]].name, (193,45,86),(25,38,56))
+                           item_dict[self.current_inv[index]].name, (193,45,86),(0,0,0), (25,38,56))
             self.game.screen.blit(tooltip.image, (x,y))
     
-    def render_text(self):
+    def render_text(self, display):
         #I'm not actually using render text here to render - however, due to the way I've set up my game loop, if i want to render anything onto the full screen, I have to do it here rather than in the main render function, else it won't be rendered properly. 
         for i in range(len(self.slot_list)):
             if time.time() - self.slot_list[i].hover_time > 1 and self.slot_list[i].hover_time != 0:
