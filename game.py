@@ -34,7 +34,9 @@ class Game():
             "return":False,
             "inventory": False,
             "console": False,
-            "backspace": False,  
+            "backspace": False, 
+            "downarrow": False,
+            "uparrow": False
         }
         self.dt, self.prev_time = 0 , 0 #This is for framerate indepence annd delta time.
         self.state_stack =[] #this is a list, but i'm gonna treat it like a stack. 
@@ -83,6 +85,10 @@ class Game():
                     self.actions['console'] = True
                 if event.key == pg.K_BACKSPACE:
                     self.actions["backspace"] = True
+                if event.key == pg.K_UP:
+                    self.actions["uparrow"] = True
+                if event.key == pg.K_DOWN:
+                    self.actions["downarrow"] = True
                     
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -111,13 +117,17 @@ class Game():
                     self.actions['console'] = False
                 if event.key == pg.K_BACKSPACE:
                     self.actions["backspace"] = False
+                if event.key == pg.K_UP:
+                    self.actions["uparrow"] = False
+                if event.key == pg.K_DOWN:
+                    self.actions["downarrow"] = False
                     
             if event.type == pg.MOUSEBUTTONUP:
                 if event.button == 1:
                     self.actions['attack'] = False
                 if event.button == 3:
                     self.actions['alt-attack'] = False
-
+                    
             if event.type == pg.TEXTINPUT:
                 self.text += event.text
                 
