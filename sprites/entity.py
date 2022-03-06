@@ -54,6 +54,7 @@ class AnimationEntity(Entity):
     
     def update(self, actions, dt, collisions):
         self.get_actions(actions, dt)
+        
         self.move(dt, collisions)
         
         
@@ -64,6 +65,7 @@ class AnimationEntity(Entity):
         
         self.get_direction(actions)
         self.animation.get_actions(actions, dt, self.current_direction)
+        self.animation.animate(dt)
         
         self.image = self.animation.image
         self.rect = self.animation.rect

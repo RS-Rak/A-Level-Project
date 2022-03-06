@@ -39,7 +39,7 @@ class Inventory(InventoryManager):
         super().text_render(screen,x,y,font,text,color)
     
     def render_text(self, display):
-        super().render_text()
+        super().render_text(display)
 
 class ChestInventory(InventoryManager):
     def __init__(self, game, chestinv):

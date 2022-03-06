@@ -1,6 +1,6 @@
 import pygame as pg
 import pygame
-import os, time
+import os
 
 from states.main_menu import *
 from Utility.settings import *
@@ -185,6 +185,9 @@ class Game():
         #this puts the main menu as the first thing in the stack because why not
         self.title_screen = Menu(self)
         self.state_stack.append(self.title_screen)
+    
+    def load_keys(self):
+        pass
     
     def reset_keys(self):
         #resets any key presses. 

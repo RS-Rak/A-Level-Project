@@ -1,6 +1,6 @@
 from Utility.util import *
 import pygame as pg
-
+from Utility.util import ConsoleOutput
 
 class Animation():
     def __init__(self,
@@ -28,21 +28,24 @@ class Animation():
             if (key in self.spritedata) and actions[key]: #a key is being pressed so cannot be idle
                 check = False
                 if not self.animation_lock and self.current_list != self.animation_dict[key][curr_direction]:
-                    
-                    self.current_list =  self.animation_dict[key][curr_direction]
-                    self.current_frame = 0
-                    self.current_fps = self.spritedata[key]["FPS"]
-                    
-                    self.looping = self.spritedata[key]["LOOPING"]
-                    self.idle = False
-                    self.animation_lock = self.spritedata[key]["ANIMATION-LOCK"]            
+                    self.set_list(key, curr_direction)            
                     break
         if check:    
             self.current_frame = 0
             self.current_list = self.animation_dict["idle"][curr_direction]
             self.idle = True
-        self.animate(dt)
         
+    def set_list(self, key, curr_direction):
+        if (key in self.spritedata):
+            self.current_list =  self.animation_dict[key][curr_direction]
+            self.current_frame = 0
+            self.current_fps = self.spritedata[key]["FPS"]
+                        
+            self.looping = self.spritedata[key]["LOOPING"]
+            self.idle = False
+            self.animation_lock = self.spritedata[key]["ANIMATION-LOCK"] 
+        else: 
+            ConsoleOutput(f"Error: {key} is not a valid animation for this entity.", (255,0,0))
         
     def animate(self, delta_time):
         if not self.idle:

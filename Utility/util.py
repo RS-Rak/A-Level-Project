@@ -59,7 +59,7 @@ def convert_time(time):
         hours = "0" + str(hours)
     return "{} : {} : {}".format(str(hours), str(minutes), str(seconds))
 
-def ConsoleOutput(message):
+def ConsoleOutput(message, color=(200,200,200)):
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     return f"[{now}] " + message
 
