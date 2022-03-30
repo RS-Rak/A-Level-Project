@@ -35,7 +35,7 @@ entity_dict = {
     "player": {
         "HP": 400,
         "ATTACK-SPEED": 8,
-        "ENTITY-SPEED": 80,
+        "ENTITY-SPEED": 100,
     } 
 }
 """

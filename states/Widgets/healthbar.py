@@ -4,19 +4,19 @@ from pygame import Vector2
 class HealthBar():
     def __init__(self, path,pos, hp, rectpos = (0,0), length = 200):
         self.image = pg.image.load(path).convert_alpha()
-        self.rect = self.image.get_rect()
         self.rectpos = rectpos
         self.rect.topleft = pos 
         self.current_hp = hp
         self.prev_hp = hp
         self.max_hp = hp
+        self.hp_ratio = self.max_hp//length
         self.hp_bar_length = length
-        self.hp
+        self.hp_trans_speed = 1
         
-    def update(self, velocity):
+    def update(self, velocity, damage):
+        self.current_hp -= damage
         self.rect.topleft += Vector2(velocity)
-        if self.prev_hp != self.hp:
-                pass
+        self.draw_health_bar()        
         
     
     def render(self, display,  camera = None):
@@ -29,5 +29,6 @@ class HealthBar():
         trans_color = (255,255,255) #the health bar has a dark-souls like transition when damage is taken - this represents this. 
         
         if self.current_hp < self.prev_hp: 
-            pass
+            self.current_hp += (self.hp_trans_speed)
+            trans_width = int(self.prev_hp)
         
