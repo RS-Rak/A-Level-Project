@@ -1,6 +1,6 @@
-Short notes
+# Short notes
 
-(28/04/22)
+**(28/04/22)**
 • Key thing to focus on going forward is backwards compatability. What I'm finding is that i have to refactor large 
 amounts of the codebase each time i make  a change. By moving certain functions to their original "parent class" so 
 to speak, i should be able to reduce the amount of time I spend on this.
