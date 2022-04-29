@@ -21,6 +21,9 @@ class Entity(pg.sprite.Sprite): #base sprite class.
     
     def get_world_loc(self, map):
         return Vector2(self.rect.x, self.rect.y) -  Vector2(map.rect.x, map.rect.y)       
+    
+    def raise_error(self, error):
+        self.game.error_log.append(ConsoleOutput(error))
         
 
 
@@ -72,7 +75,7 @@ class AnimationEntity(Entity):
             
     def move(self, dt, collisions):
         new_rect = self.collision_rect.move(self.direction_x, self.direction_y)
-        if new_rect.collidelist(collisions) == -1:
+        if new_rect.collidelist(collisions) == -1 and not self.animation.animation_lock:
             self.velocity = Vector2(round(self.speed * dt * self.direction_x), round(self.speed * dt * self.direction_y))
             self.rect.center += self.velocity 
         self.collision_rect = pg.Rect(0,0,self.rect.w/2, self.rect.h/2)

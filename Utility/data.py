@@ -18,14 +18,18 @@ class Item():
         self.rect = self.image.get_rect()
         self.rect.center = loc
  
-class Weapon(Item):
+class MeleeWeapon(Item):
     def __init__(self, name, image, itemtype, subtype, damage, effect, tooltip):
         super().__init__(name, image, itemtype, subtype, damage, effect, tooltip)
+        
+        if subtype == "Longsword":
+            self.hitbox = [0,0,10,10]
+        # note add more subtypes here below
        
 #this entire file serves purely as an item dictionary for my various items,
 item_dict = {
     "000": None,
-    "001": Weapon("Simple Sword", os.path.join("assets","icons","Swords","default-sword.png"), "Melee", "Sword", 5, None, 
+    "001": MeleeWeapon("Simple Sword", os.path.join("assets","icons","Swords","default-sword.png"), "Melee", "Longsword", 5, None, 
                 "A simple blade, the kind that you'd see wielded by merchant's guards. ")
     ,
     "002":  Item("Healing Potion", os.path.join("assets", "icons", "Potions","healing-potion.png"), "Item", "Potion", 5, "Healing", 

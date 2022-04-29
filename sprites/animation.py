@@ -14,6 +14,7 @@ class Animation():
         self.load_sprites()
         
         self.current_list = self.animation_dict["idle"][curr_direction]
+        self.current_key = "idle"
         self.image = self.current_list[self.current_frame]
         self.rect = self.image.get_rect()
         self.rect.center = pos
@@ -34,12 +35,14 @@ class Animation():
             self.current_frame = 0
             self.current_list = self.animation_dict["idle"][curr_direction]
             self.idle = True
+            self.current_key = "idle"
         
     def set_list(self, key, curr_direction):
         if (key in self.spritedata):
             self.current_list =  self.animation_dict[key][curr_direction]
             self.current_frame = 0
             self.current_fps = self.spritedata[key]["FPS"]
+            self.current_key = key
                         
             self.looping = self.spritedata[key]["LOOPING"]
             self.idle = False

@@ -30,17 +30,31 @@ class Player(AnimationEntity):
     def update(self, actions, dt, collisions):
         super().update(actions, dt, collisions)
         self.hitbox = self.rect.inflate(-1.2, -1.2)
-       # self.attack()
+        self.attack()
         #self.check_hits()
         self.apply_effects()
             
     def attack(self):
-        if self.animation.current_list == self.animation.animation_dict["attack"][self.current_direction] and self.animation.current_frame < 6:
+        if  self.animation.current_key == "attack" and self.animation.current_frame < 6:
+            self.create_hitbox()
             if self.weapon.type == "sword":
                 self.attack_hitbox = self.weapon.hitbox[self.current_direction]
         else: 
             self.attack_hitbox = None
 
+    def create_hitbox(self):
+        if self.weapon.type == "Melee":
+                self.attack_hitbox = pg.Rect(self.weapon.hitbox)
+                if self.current_direction == "left":
+                    self.attack_hitbox.midright = self.rect.midleft
+                elif self.current_direction == "right":
+                    self.attack_hitbox.midleft = self.rect.midright
+                elif self.current_direction == "up":
+                    self.attack_hitbox.midbottom = self.rect.midtop
+                elif self.current_direction == "down":
+                    self.attack_hitbox.midtop = self.rect.midbottom
+                self.raise_error(f"Successfully created a weapon hitbox, for weapon name {self.weapon.name} for Player character.")
+    
     def apply_effects(self):
         for x in self.effects:
             pass
@@ -50,7 +64,7 @@ class Player(AnimationEntity):
         damage = self.weapon.damage
         try:damage += (self.effects[self.weapon.type] - self.effects[self.weapon.type])
         except: 
-            try: self.game.error_log.append(ConsoleOutput(f"Couldn't get damage values for weapon {self.weapon.name}, of type {self.weapon.type}."))
+            try: self.raise_error(f"Couldn't get damage values for weapon {self.weapon.name}, of type {self.weapon.type}.")
             except: pass 
             #note to self, start building console soon. first get attacks to work tho kekw.  
                  
