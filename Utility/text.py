@@ -3,7 +3,7 @@ import pygame as pg
 from pygame import Vector2
 
 
-
+# note, rewrite to allow for custom colours, inline formatting, maybe symbols as well? really i want to reformat this as best as possible. 
 class Text():
     def __init__(
         self, 

@@ -35,7 +35,7 @@ class Credits(State):
     def render(self, display):
         display.fill((255,255,255))
     
-    def render_text(self, display):
+    def render_text(self):
         self.game.draw_text(None, "CREDITS TO BE ADDED", (0,0,0), self.game.GAME_W/2, self.game.GAME_H * 0.35, self.game.font)
 
 class Pause_Menu(State):

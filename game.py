@@ -152,7 +152,6 @@ class Game():
             self.playing, self.running = False, False
            # for x in range(len(self.error_log)):
             #    print(self.error_log[x])
-                
         self.render_text()
         pygame.display.flip()
     

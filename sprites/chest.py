@@ -15,6 +15,7 @@ class Chest(Entity):
         try:
             self.data = load_data(os.path.join("assets","saved_data","chests","{}.json".format(inv_id)), False)
         except:
+            # maybe create a seperate entity raise error function? and have all children of Entity use this function instead?
             self.game.error_log.append(ConsoleOutput(f"On creation of map {curr_map}, couldn't find chest data for chest at world co-ordinates: {str(self.rect.center)}."))
             self.data = {}
         

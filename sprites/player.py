@@ -5,6 +5,7 @@ from pygame import Vector2
 from datetime import datetime  
 from copy import deepcopy
 
+# note finish adding attacks, i need this to work properly. 
 class Player(AnimationEntity):
     def __init__(self, 
                  game, 
@@ -36,8 +37,9 @@ class Player(AnimationEntity):
     def attack(self):
         if self.animation.current_list == self.animation.animation_dict["attack"][self.current_direction] and self.animation.current_frame < 6:
             if self.weapon.type == "sword":
-                self.weapon.hitbox[self.current_direction] = self.attack_hitbox
-        else: self.attack_hitbox = None
+                self.attack_hitbox = self.weapon.hitbox[self.current_direction]
+        else: 
+            self.attack_hitbox = None
 
     def apply_effects(self):
         for x in self.effects:

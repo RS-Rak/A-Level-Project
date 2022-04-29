@@ -54,7 +54,6 @@ class AnimationEntity(Entity):
     
     def update(self, actions, dt, collisions):
         self.get_actions(actions, dt)
-        
         self.move(dt, collisions)
         
         

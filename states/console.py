@@ -4,6 +4,8 @@ from Utility.text import *
 from Utility.util import *
 import os
 
+# note: add date time stamp at the top then only include time at the top?
+
 class Console(State):
     def __init__(self, game):
         super().__init__(game)
