@@ -1,13 +1,29 @@
-Messing around with saving and game states - menu, in game, etc.~~ 
+# Welcome to my A Level Project - An Unnamed RPG  
 
-To Do:
-* Player UI, such as health bar and weapon showcase on main screen
-* Basic animations 
-* Linked to this, AI
-* Need to move some spritesheet loading to the main game.py file in order to help with performance later.
-* Need to fix spritesheet divisors to be of their own list. 
-* I NEED player UI to be done sooner rather than later. Order of priority is spritesheet -> attack -> UI -> console.  
-* Rewrite widgets to no longer be image based. 
-* Actually new priority list - rewrite/rework most sprites to have a render function and add this into the game. fix any sort of issues where old code is still lurking for no reason, general cleanup. Move files into one another, cut down on unnecessary variables, etc. Make sure names are as short as possible and understandable. Redraw the mainmap, I dislike this current one. Once I feel that I've slimmed down the code as best as I can, I'm going to work on some more stuff. Oh, and fix the bug where the collision hitbox for the exit is too low. 
-* General timeline for these changes is - by weekend finish all code cleanup. Monday is UI, Tuesday/Wednesday is attacks. Thursday/Firday is art + map making. Saturday/Sunday, get some enemies in, get the tests working. 
-* note, change how keybinds work in game.py, decently high priority i'll do it after console. also rework the world.py code for the uhh states it's getting long
+### Brief  
+My solution will be a 2D top-down RPG game. The underlying story will revolve around the player character discovering more about their own history, through cutscenes at the end of major boss fights, or dialogue with various NPCs (Non-Player Characters). There will be at least 3 dungeons featured in the end game, with at least one boss fight. These dungeon areas will be connected via overworld segments, containing NPC towns where shops may be found, or areas with weaker enemies who respawn, for gathering resources. If I get far ahead enough in development, I’d like for these NPCs to offer quests as well, which can be managed and viewed via the quest menu.  
+
+### How can I see your progress?
+While I've been a little lax with it, if you go to the wiki page on the top, I'm going to begin making some blog posts deteailing my thoughts, how certain concepts will work, and some images showcasing development progress.
+
+## Development Progress
+- [ ] Menu System   
+- [ ] Baic Player Movement along X and Y Axis   
+- [ ] Basic Buttons    
+- [ ] Detecting player inputs 
+- [ ] Map loading, saving  
+- [ ] Basic object loading on maps (e.g. Chests)  
+- [ ] Basic Inventory GUI 
+- [ ] Basic attacks
+- [ ] Simple enemies 
+- [ ] Player collisions 
+- [ ] Drag and drop for the inventory 
+- [ ] Simple AI for enemies
+- [ ] Chests 
+- [ ] Saving and save slots 
+- [ ] Dash/Roll ability for the player
+- [ ] Spritesheets for player abilities
+- [ ] Unified Text System (with in-line formatting!)
+- [ ] In-game console
+- [ ] Commands for said in game console 
+- [ ] 
