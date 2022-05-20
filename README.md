@@ -7,23 +7,23 @@ My solution will be a 2D top-down RPG game. The underlying story will revolve ar
 While I've been a little lax with it, if you go to the wiki page on the top, I'm going to begin making some blog posts deteailing my thoughts, how certain concepts will work, and some images showcasing development progress.
 
 ## Development Progress
-- [ ] Menu System   
-- [ ] Baic Player Movement along X and Y Axis   
-- [ ] Basic Buttons    
-- [ ] Detecting player inputs 
-- [ ] Map loading, saving  
-- [ ] Basic object loading on maps (e.g. Chests)  
-- [ ] Basic Inventory GUI 
+- [X] Menu System   
+- [X] Baic Player Movement along X and Y Axis   
+- [X] Basic Buttons    
+- [X] Detecting player inputs 
+- [X] Map loading, saving  
+- [X] Basic object loading on maps (e.g. Chests)  
+- [X] Basic Inventory GUI 
 - [ ] Basic attacks
 - [ ] Simple enemies 
-- [ ] Player collisions 
+- [X] Player collisions 
 - [ ] Drag and drop for the inventory 
 - [ ] Simple AI for enemies
 - [ ] Chests 
-- [ ] Saving and save slots 
+- [X] Saving and save slots 
 - [ ] Dash/Roll ability for the player
-- [ ] Spritesheets for player abilities
+- [X] Spritesheets for player abilities
 - [ ] Unified Text System (with in-line formatting!)
-- [ ] In-game console
+- [X] In-game console
 - [ ] Commands for said in game console 
-- [ ] 
+- [ ] MORE TO BE ADDED
