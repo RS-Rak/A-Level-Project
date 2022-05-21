@@ -50,7 +50,7 @@ class Animation():
         else: 
             ConsoleOutput(f"Error: {key} is not a valid animation for this entity.", (255,0,0))
         
-    def animate(self, delta_time):
+    def animate(self, delta_time, curr_direction):
         if not self.idle:
             self.last_frame_update += delta_time
             if self.last_frame_update > 1/self.current_fps:
@@ -61,8 +61,10 @@ class Animation():
                         self.current_frame = 0
                     else: 
                         self.current_frame = 0 
-                        self.current_list = None
+                        self.current_list = self.animation_dict["idle"][curr_direction]
+                        self.idle = True
                         self.animation_lock = False
+                        
         
         self.image = self.current_list[self.current_frame]
         pos = self.rect.center

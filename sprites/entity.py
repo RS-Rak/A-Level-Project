@@ -67,7 +67,7 @@ class AnimationEntity(Entity):
         
         self.get_direction(actions)
         self.animation.get_actions(actions, dt, self.current_direction)
-        self.animation.animate(dt)
+        self.animation.animate(dt, self.current_direction)
         
         self.image = self.animation.image
         self.rect = self.animation.rect

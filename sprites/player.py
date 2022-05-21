@@ -43,7 +43,7 @@ class Player(AnimationEntity):
             self.attack_hitbox = None
 
     def create_hitbox(self):
-        if self.weapon.type == "Melee":
+        if self.weapon.type == "Melee" and self.attack_hitbox == None:
                 self.attack_hitbox = pg.Rect(self.weapon.hitbox)
                 if self.current_direction == "left":
                     self.attack_hitbox.midright = self.rect.midleft
@@ -54,6 +54,7 @@ class Player(AnimationEntity):
                 elif self.current_direction == "down":
                     self.attack_hitbox.midtop = self.rect.midbottom
                 self.raise_error(f"Successfully created a weapon hitbox, for weapon name {self.weapon.name} for Player character.")
+                
     
     def apply_effects(self):
         for x in self.effects:
